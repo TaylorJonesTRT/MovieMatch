@@ -3,7 +3,6 @@ import tmdbsimple as tmdb
 import rtsimple as rt
 from random import choice
 import json
-import requests
 import os
 
 app = Flask(__name__)
