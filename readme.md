@@ -26,6 +26,7 @@ Or you can view a version I already have up at [Heroku](https://themoviematcher.
 ## Dependencies
 
 Python 3.8.2
+
 [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
 [The Movie Database Python API Wrapper](https://pypi.org/project/tmdbsimple/)
