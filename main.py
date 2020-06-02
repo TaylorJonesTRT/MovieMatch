@@ -11,7 +11,7 @@ APP__ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
 @app.route('/')
-def hello_world():
+def home():
     tmdb.API_KEY = '77361ec1e5766470409b32417bc7594b'
     api_key = tmdb.API_KEY
 

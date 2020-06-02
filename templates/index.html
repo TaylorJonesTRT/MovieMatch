@@ -21,16 +21,16 @@
 
     <main role="main" class="container">
     <header class="logo">
-        MovieMatch!
+      <img src="{{ url_for('static', filename='images/logo.png') }}" /><!--<i class="fas fa-film fa-5x"></i>-->
     </header>
 
     <a href="/">
-      <button class ="button downvote">
+      <button class ="button thumbsdown">
         <i class="fas fa-thumbs-down fa-2x"></i>
       </button>
     </a>
 
-    <div class="movie-card">
+    <div class="movie-card shadow p-3 mb-5 bg-white rounded">
         <img src={{poster_image_path}} alt="movie">
         <div class="text">
           <h4 class="movie-title"><b>{{movie_title}}</b></h4>
@@ -44,7 +44,7 @@
 
       <div>
         <a href="/">
-          <button class="button heart">
+          <button class="shadow p-3 mb-5 bg-white rounded button thumbsup">
             <i class="fas fa-thumbs-up fa-2x"></i>
           </button>
         </a>
