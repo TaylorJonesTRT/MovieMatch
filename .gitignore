@@ -1,8 +1,2 @@
-random_movie.py
-timetest.py
-_pycache_/
-"_django files needed_/"
+./backend/node_modules
 .vscode
-venv/
-Pipfile.lock
-Pipfile
