@@ -7,8 +7,7 @@ import passport from 'passport';
 require('dotenv').config();
 require('./passport');
 
-// import middlewares from './middlewares';
-import api from './api';
+import middlewares from './middlewares';
 
 const app = express();
 
@@ -33,9 +32,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/api/v1', api);
+app.use(middlewares.notFound);
+app.use(middlewares.errorHandler);
 
-// app.use(middlewares.notFound);
-// app.use(middlewares.errorHandler);
-
-module.exports = app;
+export default app;
