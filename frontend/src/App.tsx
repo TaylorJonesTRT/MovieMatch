@@ -1,10 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { moveEmitHelpers } from 'typescript';
+import React, { useState, useEffect, useCallback, useReducer } from 'react';
 import './App.css';
 
+function useForceUpdate() {
+	const [, setTick] = useState(0);
+	const update = useCallback(() => {
+		setTick((tick) => tick + 1);
+	}, []);
+	return update;
+}
+
 function App() {
-	const [randomMovieData, setRandomMovieData] = useState([]);
 	const [latestMovieID, setLatestMovieID] = useState();
+	const [randomMovieData, setRandomMovieData] = useState([]);
+
+	// const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
+
+	const forceUpdate = useForceUpdate();
 
 	useEffect(() => {
 		const fetchLatestMovie = async () => {
@@ -12,7 +23,15 @@ function App() {
 				'https://api.themoviedb.org/3/movie/latest?api_key=' +
 					process.env.REACT_APP_API_KEY
 			);
+			if (!movie.ok) {
+				forceUpdate();
+			}
+
 			const data = await movie.json();
+
+			if (data.adult) {
+				forceUpdate();
+			}
 			setLatestMovieID(data.id);
 		};
 		fetchLatestMovie();
@@ -24,8 +43,9 @@ function App() {
 			const randomMovie = await fetch(
 				`https://api.themoviedb.org/3/movie/${randomMovieID}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
 			);
-			const data = await randomMovie.json();
-			setRandomMovieData(data);
+
+			const movieData = await randomMovie.json();
+			setRandomMovieData(movieData);
 		};
 		fetchRandomMovie();
 	}, [latestMovieID]);
