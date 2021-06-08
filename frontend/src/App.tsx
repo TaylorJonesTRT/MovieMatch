@@ -21,24 +21,11 @@ function App() {
 
   const forceUpdate = useForceUpdate();
 
-  useEffect(() => {
-    const fetchLatestMovie = async () => {
-      const movie = await fetch(
-        `https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_API_KEY}`
-      );
-      if (!movie.ok) {
-        forceUpdate();
-        return;
-      }
-      const data = await movie.json();
-      if (data.adult) {
-        forceUpdate();
-      } else {
-        setLatestMovieID(data.id);
-      }
-    };
-    fetchLatestMovie();
-  });
+  const movie = fetch(
+    `https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_API_KEY}`
+  )
+    .then((data) => data.json())
+    .then((data) => setLatestMovieID(data.id));
 
   useEffect(() => {
     const fetchRandomMovie = async () => {
@@ -56,9 +43,22 @@ function App() {
 
       const movieData = await randomMovie.json();
 
+      if (movieData.status_code === 34) {
+        forceUpdate();
+        console.log('reseting due to status code 34');
+      }
+
+      if (movieData.adult === true) {
+        forceUpdate();
+        console.log('updating as adult movie');
+      }
+
       // setting the poster image or forcing update if no poster
       const imagePath = 'https://www.themoviedb.org/t/p/original';
-      if (movieData.poster_path === null) {
+      if (
+        movieData.poster_path === null ||
+        movieData.poster_path === undefined
+      ) {
         setMoviePoster(noPosterImg);
       } else {
         const posterPath = imagePath + movieData.poster_path;
