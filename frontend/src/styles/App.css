@@ -9,3 +9,8 @@
   height: 50px;
   padding-top: 0px;
 }
+
+.movie-card img {
+  width: 100%;
+  height: auto;
+}

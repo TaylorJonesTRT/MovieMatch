@@ -28,12 +28,14 @@ function App() {
       );
       if (!movie.ok) {
         forceUpdate();
+        return;
       }
       const data = await movie.json();
       if (data.adult) {
         forceUpdate();
+      } else {
+        setLatestMovieID(data.id);
       }
-      setLatestMovieID(data.id);
     };
     fetchLatestMovie();
   });
@@ -49,16 +51,18 @@ function App() {
       // forcing update on app
       if (!randomMovie.ok) {
         forceUpdate();
+        console.log('resetting');
       }
 
       const movieData = await randomMovie.json();
 
       // setting the poster image or forcing update if no poster
-      const imagePath = 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2';
+      const imagePath = 'https://www.themoviedb.org/t/p/original';
       if (movieData.poster_path === null) {
-        forceUpdate();
+        setMoviePoster(noPosterImg);
       } else {
-        setMoviePoster(`${imagePath} + ${movieData.poster_path}`);
+        const posterPath = imagePath + movieData.poster_path;
+        setMoviePoster(posterPath);
       }
 
       setRandomMovieData(movieData);
@@ -74,7 +78,9 @@ function App() {
       </div>
 
       <div className="content">
-        <div className="movie-card">movie name</div>
+        <div className="movie-card">
+          <img src={moviePoster} alt="movieName" />
+        </div>
         <div className="dislike-btn">D</div>
         <div className="like-btn">L</div>
       </div>
