@@ -21,11 +21,20 @@ function App() {
 
   const forceUpdate = useForceUpdate();
 
-  const movie = fetch(
-    `https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_API_KEY}`
-  )
-    .then((data) => data.json())
-    .then((data) => setLatestMovieID(data.id));
+  useEffect(() => {
+    const fetchLatestMovie = async () => {
+      const movie = await fetch(
+        `https://api.themoviedb.org/3/movie/latest?api_key=${process.env.REACT_APP_API_KEY}`
+      );
+      if (!movie.ok) {
+        forceUpdate();
+      }
+      const data = await movie.json();
+
+      setLatestMovieID(data.id);
+    };
+    fetchLatestMovie();
+  });
 
   useEffect(() => {
     const fetchRandomMovie = async () => {
