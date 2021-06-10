@@ -3,20 +3,24 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 import passport from 'passport';
+import mongoose from 'mongoose';
+// const middlewares = require('./middlewares');
+
+import api from './api';
 
 require('dotenv').config();
-require('./passport');
-
-import middlewares from './middlewares';
+// require('./passport');
 
 const app = express();
 
-import mongoose from 'mongoose';
+if (!process.env.MONGO_URL) {
+  process.exit(1);
+}
 
-const mongoDB = 'mongodb://127.0.0.1:27017/blog-api';
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// const mongoDB = process.env.MONGO_URL;
+// mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -25,14 +29,14 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.json({
-    message:
-      'Blog Api - A blog built off of RESTful ideas with only the features you need to get going.',
-  });
+app.get('/', (req: any, res: any) => {
+  res.json({ message: 'MovieMatch Backend' });
 });
 
-app.use(middlewares.notFound);
-app.use(middlewares.errorHandler);
+app.use('/api/', api);
 
-export default app;
+// app.use(middlewares.notFound);
+// app.use(middlewares.errorHandler);
+
+// export default app;
+module.exports = app;
