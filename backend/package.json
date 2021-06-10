@@ -21,6 +21,7 @@
     "mongodb": "^3.6.8",
     "mongoose": "^5.12.13",
     "morgan": "^1.10.0",
+    "node-fetch": "^2.6.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
@@ -35,6 +36,7 @@
     "@types/mongodb": "^3.6.17",
     "@types/morgan": "^1.9.2",
     "@types/node": "^15.9.0",
+    "@types/node-fetch": "^2.5.10",
     "@types/passport": "^1.0.6",
     "@types/passport-jwt": "^3.0.5",
     "@types/passport-local": "^1.0.33",

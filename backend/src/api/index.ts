@@ -1,4 +1,5 @@
 import express from 'express';
+import movieData from './movieData';
 
 // const express = require('express');
 // import passport from 'passport';
@@ -9,6 +10,8 @@ const app = express();
 app.get('/', (req, res) => res.json({
   message: 'Testing',
 }));
+
+app.use('/movie/data', movieData);
 
 // router.use('/auth', authenticate);
 // router.use('/posts', passport.authenticate('jwt', { session: false }), posts);
