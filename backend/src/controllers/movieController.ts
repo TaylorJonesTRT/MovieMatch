@@ -1,5 +1,7 @@
 import fetch from 'node-fetch';
 
+// Comment goes here to describe the below 2 functions
+
 function waitFor(millSeconds: any): Promise<any> {
   return new Promise<void>((resolve, reject) => {
     setTimeout(() => {
@@ -8,42 +10,62 @@ function waitFor(millSeconds: any): Promise<any> {
   });
 }
 
-const fetchRetry = async (url: any, options: any, n: number): Promise<any> => {
+// const fetchRandomMovie = async (url: any, options: any, n: number): Promise<any> => {
+//   try {
+//     const randomMovie = await fetch(url, options)
+//       .then((randomMovieData) => randomMovieData.json());
+//     if (randomMovie.adult) {
+//       console.log(randomMovie);
+//       console.log('Refetching as adult movie');
+//       await waitFor(1000 * n);
+//       return fetchRandomMovie(url, options, n - 1);
+//     }
+//     return randomMovie;
+//   } catch (err) {
+//     if (n === 1) {
+//       throw err;
+//     }
+
+//     await waitFor(1000 * n);
+//     return fetchRandomMovie(url, options, n - 1);
+//   }
+// };
+
+const fetchRandomMovie = async (options: any, n: number): Promise<any> => {
   try {
-    const randomMovie = await fetch(url, options)
-      .then((randomMovieData) => randomMovieData.json());
-    if (randomMovie.adult) {
-      console.log('Refetching as adult movie');
-      await waitFor(1000);
-      return fetchRetry(url, options, n - 1);
+    const latestMovieID = await fetch(`https://api.themoviedb.org/3/movie/latest?api_key=${process.env.TMDB_API_KEY}`)
+      .then((data) => data.json())
+      .then((movieData) => movieData.id)
+    const randomMovieID = Math.floor(Math.random() * latestMovieID);
+    const randomMovieSelection = await fetch(`https://api.themoviedb.org/3/movie/${randomMovieID}?api_key=${process.env.TMDB_API_KEY}`)
+      .then((data) => data.json());
+
+    if (!randomMovieSelection.ok) {
+      console.log('404 error, refetching');
+      await waitFor(100 * n);
+      return fetchRandomMovie({}, n - 1);
     }
-    return await fetch(url, options);
+
+    if (randomMovieSelection.adult) {
+      console.log('Refeteching due to adult movie');
+      await waitFor(100 * n);
+      return fetchRandomMovie({}, n - 1);
+    }
+    return randomMovieSelection;
   } catch (err) {
-    if (n === 1) throw err;
-    await waitFor(1000);
-    return fetchRetry(url, options, n - 1);
+    if (n === 1) {
+      throw err('All attempts failed');
+    }
+    await waitFor(100 * n);
+    return fetchRandomMovie({}, n - 1);
   }
 };
 
-const fetchRandomMovie = async function (req: any, res: any, next: any) {
-  const latestMovieID = await fetch(`https://api.themoviedb.org/3/movie/latest?api_key=${process.env.TMDB_API_KEY}`)
-    .then((data) => data.json())
-    .then((movieData) => movieData.id);
-  // const latestMovieData = await latestMovie.json();
-  // const latestMovieID = latestMovieData.id;
-
-  const randomMovieID = Math.floor(Math.random() * latestMovieID);
-  const randomMovieSelection = await fetchRetry(`https://api.themoviedb.org/3/movie/${randomMovieID}?api_key=${process.env.TMDB_API_KEY}`, {}, 5)
-    .then((randomMovieData) => randomMovieData.json());
-
-  if (randomMovieSelection.adult === true) {
-    return res.json({
-      message: 'is an adult movie',
-    });
-  }
+const getMovieDetails = async function (req: any, res: any, next: any) {
+  const randomMovieSelection = await fetchRandomMovie({}, 5);
   return res.json({
     randomMovieSelection,
   });
 };
 
-export default { fetchRandomMovie };
+export default { getMovieDetails, fetchRandomMovie };
