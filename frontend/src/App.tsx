@@ -15,62 +15,58 @@ import noPosterImg from './static/images/no_poster.png';
 // }
 
 function App() {
+  const [loading, setLoading] = useState(true);
   const [movieData, setMovieData] = useState({});
   const [moviePoster, setMoviePoster] = useState('');
 
   useEffect(() => {
+    setLoading(true);
     const fetchMovieDetails = async () => {
-      const movie = await fetch('http:/localhost:4000/api/movie/random').then(
+      const movie = await fetch('http://localhost:4000/api/movie/random').then(
         (data) => data.json()
       );
-      console.log(movie);
-      // const poster = `https://www.themoviedb.org/t/p/original${movie.poster_path}`;
-      // console.log(poster);
-      // setMovieData(movie);
-      // setMoviePoster(poster);
+      console.log(movie.movie);
+      const poster = `https://www.themoviedb.org/t/p/original${movie.movie.poster_path}`;
+      console.log(poster);
+      setMovieData(movie.movie);
+      setMoviePoster(poster);
+      setLoading(false);
     };
 
     fetchMovieDetails();
-  });
+  }, []);
 
   // useEffect(() => {
-  //   const fetchRandomMovie = async () => {
-  //     const randomMovieID = Math.floor(Math.random() * latestMovieID);
-  //     const randomMovie = await fetch(
-  //       `https://api.themoviedb.org/3/movie/${randomMovieID}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
-  //     );
-
-  //     // setting the poster image or forcing update if no poster
-  //     const imagePath = 'https://www.themoviedb.org/t/p/original';
-  //     if (
-  //       movieData.poster_path === null ||
-  //       movieData.poster_path === undefined
-  //     ) {
-  //       setMoviePoster(noPosterImg);
-  //     } else {
-  //       const posterPath = imagePath + movieData.poster_path;
-  //       setMoviePoster(posterPath);
-  //     }
-
-  //     setRandomMovieData(movieData);
+  //   setLoading(true);
+  //   const setPoster = async () => {
+  //     const movie = movieData;
+  //     const poster = await movie.poster_path;
+  //     setMoviePoster(`https://www.themoviedb.org/t/p/original${poster}`);
+  //     setLoading(false);
   //   };
-  //   fetchRandomMovie();
-  // }, [latestMovieID]);
+  //   setPoster();
+  // }, [movieData]);
 
   return (
     <div className="App">
-      <div className="header">
-        <h1>MovieMatch</h1>
-        <div className="user-bar" />
-      </div>
+      {loading ? (
+        <div> ...loading... </div>
+      ) : (
+        <>
+          <div className="header">
+            <h1>MovieMatch</h1>
+            <div className="user-bar" />
+          </div>
 
-      <div className="content">
-        <div className="movie-card">
-          <img src={moviePoster} alt="movieName" />
-        </div>
-        <div className="dislike-btn">D</div>
-        <div className="like-btn">L</div>
-      </div>
+          <div className="content">
+            <div className="movie-card">
+              <img src={moviePoster} alt="movieName" />
+            </div>
+            <div className="dislike-btn">D</div>
+            <div className="like-btn">L</div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
