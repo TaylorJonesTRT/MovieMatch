@@ -3,6 +3,6 @@ import movieController from '../controllers/movieController';
 
 const app = express();
 
-app.get('/latest-movie', movieController.getMovieDetails);
+app.get('/random/', movieController.getMovieDetails);
 
 export default app;

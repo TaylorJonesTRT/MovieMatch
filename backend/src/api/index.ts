@@ -11,7 +11,7 @@ app.get('/', (req, res) => res.json({
   message: 'Testing',
 }));
 
-app.use('/movie/data', movieData);
+app.use('/movie/', movieData);
 
 // router.use('/auth', authenticate);
 // router.use('/posts', passport.authenticate('jwt', { session: false }), posts);
