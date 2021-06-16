@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useCallback, useReducer } from 'react';
-import './styles/App.css';
-import noPosterImg from './static/images/no_poster.png';
+import React, { useState, useEffect } from 'react';
 
 // This will be used to force an update on the DOM/Components so that if a movie
 // is returned with a 404 error or is an Adult film the first useEffect below
@@ -48,12 +46,12 @@ function App() {
   // }, [movieData]);
 
   return (
-    <div className="App">
+    <div className="App container">
       {loading ? (
         <div> ...loading... </div>
       ) : (
         <>
-          <div className="header">
+          <div className="flex justify-center p-2">
             <h1>MovieMatch</h1>
             <div className="user-bar" />
           </div>
