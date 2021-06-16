@@ -1,7 +1,8 @@
 import fetch from 'node-fetch';
 
-// Comment goes here to describe the below 2 functions
-
+// This function is used to retry the fetching of the movie details if the data
+// that is returned back to the app is not suitable (an adult movie or a movie with no poseter)
+// each attempt utilizes a backoff method so that the api isn't hit right after a failure
 function waitFor(millSeconds: any): Promise<any> {
   return new Promise<void>((resolve, reject) => {
     setTimeout(() => {
@@ -50,7 +51,7 @@ const fetchRandomMovie = async (options: any, n: number): Promise<any> => {
 const getMovieDetails = async function (req: any, res: any, next: any) {
   const randomMovieSelection = await fetchRandomMovie({}, 5);
   return res.json({
-    randomMovieSelection,
+    movie: randomMovieSelection,
   });
 };
 
