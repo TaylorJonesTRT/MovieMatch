@@ -34,30 +34,21 @@ function App() {
     fetchMovieDetails();
   }, []);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   const setPoster = async () => {
-  //     const movie = movieData;
-  //     const poster = await movie.poster_path;
-  //     setMoviePoster(`https://www.themoviedb.org/t/p/original${poster}`);
-  //     setLoading(false);
-  //   };
-  //   setPoster();
-  // }, [movieData]);
-
   return (
     <div className="App container">
       {loading ? (
         <div> ...loading... </div>
       ) : (
         <>
-          <div className="flex justify-center p-2">
-            <h1>MovieMatch</h1>
-            <div className="user-bar" />
+          <div className="grid grid-cols-2 p-2">
+            <h1 className="text-left">MovieMatch</h1>
+            <div className="user-bar text-right">
+              <h1>test user</h1>
+            </div>
           </div>
 
-          <div className="content">
-            <div className="movie-card">
+          <div className="content p-0.5">
+            <div className="movie-card p-1.5">
               <img src={moviePoster} alt="movieName" />
             </div>
             <div className="dislike-btn">D</div>
