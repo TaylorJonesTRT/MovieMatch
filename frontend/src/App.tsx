@@ -35,24 +35,26 @@ function App() {
   }, []);
 
   return (
-    <div className="App container">
+    <div className="App container w-screen h-full">
       {loading ? (
         <div> ...loading... </div>
       ) : (
         <>
-          <div className="grid grid-cols-2 p-2">
+          <div className="header grid grid-cols-2 h-16 bg-red-400">
             <h1 className="text-left">MovieMatch</h1>
             <div className="user-bar text-right">
               <h1>test user</h1>
             </div>
           </div>
 
-          <div className="content p-0.5">
-            <div className="movie-card p-1.5">
+          <div className="content w-full h-5/6">
+            <div className="movie-card w-auto p-1.5">
               <img src={moviePoster} alt="movieName" />
             </div>
-            <div className="dislike-btn">D</div>
-            <div className="like-btn">L</div>
+            <div className="choices grid grid-cols-2 justify-items-center h-5/6">
+              <div className="dislike-btn w-1/2 text-center bg-red-400">D</div>
+              <div className="like-btn w-1/2 text-center bg-green-400">L</div>
+            </div>
           </div>
         </>
       )}
