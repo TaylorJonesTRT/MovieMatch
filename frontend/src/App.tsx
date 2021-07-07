@@ -1,16 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-
-// This will be used to force an update on the DOM/Components so that if a movie
-// is returned with a 404 error or is an Adult film the first useEffect below
-// will hit the api again to get a movie that isn't either of the above errors
-// function useForceUpdate() {
-//   const [, setTick] = useState(0);
-//   const update = useCallback(() => {
-//     setTick((tick) => tick + 1);
-//   }, []);
-//   return update;
-// }
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -23,9 +14,7 @@ function App() {
       const movie = await fetch('http://localhost:4000/api/movie/random').then(
         (data) => data.json()
       );
-      console.log(movie.movie);
       const poster = `https://www.themoviedb.org/t/p/original${movie.movie.poster_path}`;
-      console.log(poster);
       setMovieData(movie.movie);
       setMoviePoster(poster);
       setLoading(false);
@@ -47,13 +36,17 @@ function App() {
             </div>
           </header>
 
-          <div className="content">
-            <div className="movie-card">
+          <div className="content w-full">
+            <div className="movie-card h-5/6">
               <img src={moviePoster} alt="movieName" />
             </div>
-            <div className="choices">
-              <div className="dislike-btn w-full text-center bg-red-400">D</div>
-              <div className="like-btn w-full text-center bg-green-400">L</div>
+            <div className="choices p-10 h-1/6 w-full grid grid-cols-2 grid-rows-1 grid-flow-row justify-items-center text-center place-content-center">
+              <div className="dislike-btn w-1/2 h-full text-red-400 text-5xl self-center">
+                <FontAwesomeIcon icon={faThumbsDown} />
+              </div>
+              <div className="like-btn h-full w-1/2 text-green-600 text-5xl">
+                <FontAwesomeIcon icon={faHeart} />
+              </div>
             </div>
           </div>
         </>
