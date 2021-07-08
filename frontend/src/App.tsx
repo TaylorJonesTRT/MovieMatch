@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,23 +9,29 @@ import logo from './static/images/logo.png';
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [movieData, setMovieData] = useState({});
+  const [movieData, setMovieData] = useState(Object);
   const [moviePoster, setMoviePoster] = useState('');
+  const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    const fetchMovieDetails = async () => {
+    const fetchMovieDetails = async (): Promise<any> => {
       const movie = await fetch('http://localhost:4000/api/movie/random').then(
         (data) => data.json()
       );
       const poster = `https://www.themoviedb.org/t/p/original${movie.movie.poster_path}`;
-      setMovieData(movie.movie);
+      setMovieData({ movieData: movie });
       setMoviePoster(poster);
-      setLoading(false);
+      return Promise.resolve();
     };
 
-    fetchMovieDetails();
+    fetchMovieDetails().then(() => setLoading(false));
+    console.log(movieData);
   }, []);
+
+  const flipCard = () => {
+    setShowDetails(!showDetails);
+  };
 
   return (
     <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
@@ -40,12 +49,22 @@ function App() {
           </header>
 
           <div className="content w-full h-5/6">
-            <div className="movie-card flex flex-col justify-center">
-              <img
-                src={moviePoster}
-                alt="movieName"
-                className="h-96 shadow-2xl"
-              />
+            <div
+              className="movie-card flex flex-col justify-center p-2"
+              onClick={flipCard}
+            >
+              {showDetails ? (
+                <ul>
+                  <li>{movieData.movieData.movie.original_title}</li>
+                </ul>
+              ) : (
+                <img
+                  src={moviePoster}
+                  alt="movieName"
+                  className="h-96 shadow-2xl"
+                />
+              )}
+
               <p className="poster-notice text-center text-xs text-gray-500">
                 Click the poster for details
               </p>
