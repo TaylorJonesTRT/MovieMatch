@@ -22,11 +22,11 @@ function App() {
       const poster = `https://www.themoviedb.org/t/p/original${movie.movie.poster_path}`;
       setMovieData({ movieData: movie });
       setMoviePoster(poster);
-      return Promise.resolve();
     };
 
-    fetchMovieDetails().then(() => setLoading(false));
-    console.log(movieData);
+    fetchMovieDetails()
+      .then(() => setLoading(false))
+      .then(() => console.log(movieData));
   }, []);
 
   const flipCard = () => {
@@ -56,6 +56,8 @@ function App() {
               {showDetails ? (
                 <ul>
                   <li>{movieData.movieData.movie.original_title}</li>
+                  <li>{movieData.movieData.movie.overview}</li>
+                  <li>{movieData.movieData.movie.runtime}</li>
                 </ul>
               ) : (
                 <img
