@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import logo from './static/images/logo.png';
@@ -43,34 +44,32 @@ function App() {
             <div className="w-2/5 self-center">
               <img src={logo} alt="MovieMatch" />
             </div>
-            <div className="user-bar w-1/2 self-center text-right">
+            <div className="user-bar w-3/5 self-center text-right">
               <h1>test user</h1>
             </div>
           </header>
 
           <div className="content w-full h-5/6">
             <div
-              className="movie-card flex flex-col justify-center p-2"
+              className="movie-card bg-opacity-0 w-10/12 h-96 flex flex-col justify-center p-2 shadow-2xl m-auto overflow-clip ring-2 ring-gray-300"
               onClick={flipCard}
             >
               {showDetails ? (
                 <ul>
                   <li>{movieData.movieData.movie.original_title}</li>
-                  <li>{movieData.movieData.movie.overview}</li>
-                  <li>{movieData.movieData.movie.runtime}</li>
+                  <li className="text-xs">
+                    {movieData.movieData.movie.overview}
+                  </li>
+                  <li>Runtime: {movieData.movieData.movie.runtime} Minutes</li>
                 </ul>
               ) : (
-                <img
-                  src={moviePoster}
-                  alt="movieName"
-                  className="h-96 shadow-2xl"
-                />
+                <img src={moviePoster} alt="movieName" className="h-full" />
               )}
-
-              <p className="poster-notice text-center text-xs text-gray-500">
-                Click the poster for details
-              </p>
             </div>
+
+            <p className="poster-notice text-center text-xs text-gray-500">
+              Click the poster for details
+            </p>
             <div className="choices w-full pt-10 text-5xl grid grid-cols-2 grid-rows-1 grid-flow-row justify-items-center text-center place-content-center">
               <div className="dislike-btn text-red-400 self-center">
                 <FontAwesomeIcon icon={faThumbsDown} />
