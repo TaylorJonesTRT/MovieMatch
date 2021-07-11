@@ -5,7 +5,7 @@ const app = express();
 
 app.get('/user/liked-movies', userController.getUserLikedMovies);
 
-app.post('/user/like-movie', userController.addLikedMovie);
-app.post('/user/dislike-movie', userController.addDislikedMovie);
+app.post('/user/like-movie', userController.saveMovie);
+app.post('/user/dislike-movie', userController.saveMovie);
 
 export default app;
