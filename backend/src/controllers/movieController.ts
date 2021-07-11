@@ -55,4 +55,4 @@ const getMovieDetails = async function (req: any, res: any, next: any) {
   });
 };
 
-export default { getMovieDetails, fetchRandomMovie };
+export default { getMovieDetails };
