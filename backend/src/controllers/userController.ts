@@ -1,8 +1,19 @@
+/* eslint-disable consistent-return */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable func-names */
 import { body, validationResult } from 'express-validator';
 import Movie from '../models/movieModel';
 
-exports.showLikedMovies = function (req, res, next) {
-  // Not implemented yet
+exports.showLikedMovies = function (req, res:any , next: any) {
+  Movie.find({}, 'title description runTime')
+    .exec(function (err: any, listMovies: any) {
+      if (err) return next(err);
+      res.json({
+        movies: {
+          listMovies,
+        },
+      });
+    });
 };
 
 exports.saveMovie = [
