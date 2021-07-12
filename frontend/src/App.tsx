@@ -17,6 +17,8 @@ function App() {
   useEffect(() => {
     setLoading(true);
     const fetchMovieDetails = async (): Promise<any> => {
+      // todo: Need to switch over from using fetch below to using axios
+
       const movie = await fetch('http://localhost:4000/api/movie/random').then(
         (data) => data.json()
       );
