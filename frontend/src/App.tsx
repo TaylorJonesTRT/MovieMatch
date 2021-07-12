@@ -19,10 +19,10 @@ function App() {
     const fetchMovieDetails = async (): Promise<any> => {
       // todo: Need to switch over from using fetch below to using axios
 
-      const movie = await fetch('http://localhost:4000/api/movie/random').then(
-        (data) => data.json()
+      const movie = await axios('http://localhost:4000/api/movie/random').then(
+        (data) => data
       );
-      const poster = `https://www.themoviedb.org/t/p/original${movie.movie.poster_path}`;
+      const poster = `https://www.themoviedb.org/t/p/original${movie.data.movie.poster_path}`;
       setMovieData({ movieData: movie });
       setMoviePoster(poster);
     };
