@@ -9,6 +9,10 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
   username: { type: String, required: true, maxLength: 35 },
   password: { type: String, required: true, minLength: 8 },
+  likedMovies: [{
+    title: String, description: String, runTime: Number, id: Number,
+  }],
+  dislikedMovies: [{ title: String, id: Number }],
 });
 
 UserSchema.pre('save', function (next) {
@@ -27,4 +31,4 @@ UserSchema.pre('save', function (next) {
   });
 });
 
-module.exports = mongoose.model('User', UserSchema);
+export default mongoose.model('User', UserSchema);

@@ -5,6 +5,9 @@ import { body, validationResult } from 'express-validator';
 import Movie from '../models/movieModel';
 
 exports.showLikedMovies = function (req, res:any , next: any) {
+  // todo: need to figure out a way to make it return only liked movies and not every single movie
+  const user = req.body.username;
+
   Movie.find({}, 'title description runTime')
     .exec(function (err: any, listMovies: any) {
       if (err) return next(err);
@@ -35,6 +38,7 @@ exports.saveMovie = [
         description: req.body.movieDescription,
         runTime: req.body.movieRunTime,
         liked: req.body.liked,
+        belongsTo: req.body.username,
       });
       if (!errors.isEmpty()) {
         res.json({
