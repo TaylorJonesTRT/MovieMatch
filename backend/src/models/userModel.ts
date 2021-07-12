@@ -9,9 +9,7 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
   username: { type: String, required: true, maxLength: 35 },
   password: { type: String, required: true, minLength: 8 },
-  likedMovies: [{
-    title: String, description: String, runTime: Number, id: Number,
-  }],
+  likedMovies: { type: mongoose.SchemaTypes.Mixed, required: true },
   dislikedMovies: [{ title: String, id: Number }],
 });
 
