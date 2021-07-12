@@ -1,4 +1,4 @@
-import { body, validationRequest } from 'express-validator';
+import { body, validationResult } from 'express-validator';
 import Movie from '../models/movieModel';
 
 exports.showLikedMovies = function (req, res, next) {
@@ -15,11 +15,9 @@ exports.saveMovie = [
   // Processing the request after validation and sanitization
   (req: any, res: any, next: any) => {
     // Extract the validation errors from the request
-    const errors = validationRequest(req);
+    const errors = validationResult(req);
 
-    // Add the movie to to the correct section (liked/disliked)
-
-    // Adding movie to the liked section
+    // Creating a new movie in the database for the user, if errors throwing errors instead.
     if (req.body.liked === true) {
       const movie = new Movie({
         title: req.body.movieTitle,
