@@ -2,7 +2,7 @@
 /* eslint-disable func-names */
 /* eslint-disable prefer-arrow-callback */
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const { Schema } = mongoose;
 
