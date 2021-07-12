@@ -2,21 +2,34 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable func-names */
 import { body, validationResult } from 'express-validator';
+import async from 'async';
 import Movie from '../models/movieModel';
+import User from '../models/userModel';
 
-exports.showLikedMovies = function (req, res:any , next: any) {
+exports.showLikedMovies = function (req: any, res: any , next: any) {
   // todo: need to figure out a way to make it return only liked movies and not every single movie
-  const user = req.body.username;
+  const user = await User.findById({ req.params.username });
 
-  Movie.find({}, 'title description runTime')
-    .exec(function (err: any, listMovies: any) {
-      if (err) return next(err);
-      res.json({
-        movies: {
-          listMovies,
-        },
-      });
-    });
+  // todo: not sure if i am on the right track with the below, need to refactor some more
+  async.parallel({
+    user: function (callback) {
+      User.findById(req.params.id)
+      .exec(callback)
+    },
+    likedMovies: function (callback) {
+      User.get('likedMovies')
+    }
+  })
+
+  // User.find({}, 'title description runTime')
+  //   .exec(function (err: any, listMovies: any) {
+  //     if (err) return next(err);
+  //     res.json({
+  //       movies: {
+  //         listMovies,
+  //       },
+  //     });
+  //   });
 };
 
 exports.saveMovie = [
