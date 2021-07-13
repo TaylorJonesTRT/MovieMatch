@@ -39,7 +39,7 @@ function App() {
   return (
     <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
       {loading ? (
-        <div> ...loading... </div>
+        <div> ...loading.... </div>
       ) : (
         <>
           <header className="w-full h-1/6 flex flex-row content-center p-2.5">
@@ -58,11 +58,13 @@ function App() {
             >
               {showDetails ? (
                 <ul>
-                  <li>{movieData.movieData.movie.original_title}</li>
+                  <li>{movieData.movieData.data.movie.original_title}</li>
                   <li className="text-xs">
-                    {movieData.movieData.movie.overview}
+                    {movieData.movieData.data.movie.overview}
                   </li>
-                  <li>Runtime: {movieData.movieData.movie.runtime} Minutes</li>
+                  <li>
+                    Runtime: {movieData.movieData.data.movie.runtime} Minutes
+                  </li>
                 </ul>
               ) : (
                 <img src={moviePoster} alt="movieName" className="h-full" />
