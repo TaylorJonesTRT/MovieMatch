@@ -1,5 +1,5 @@
 import express from 'express';
-import movieData from './movieData';
+import movieData from './movie/movieData';
 
 // const express = require('express');
 // import passport from 'passport';
