@@ -17,8 +17,6 @@ function App() {
   useEffect(() => {
     setLoading(true);
     const fetchMovieDetails = async (): Promise<any> => {
-      // todo: Need to switch over from using fetch below to using axios
-
       const movie = await axios('http://localhost:4000/api/movie/random').then(
         (data) => data
       );
@@ -27,11 +25,10 @@ function App() {
       setMoviePoster(poster);
     };
 
-    fetchMovieDetails()
-      .then(() => setLoading(false))
-      .then(() => console.log(movieData));
+    fetchMovieDetails().then(() => setLoading(false));
   }, []);
 
+  // The below is to have React know when to show the details of a movie or its poster.
   const flipCard = () => {
     setShowDetails(!showDetails);
   };

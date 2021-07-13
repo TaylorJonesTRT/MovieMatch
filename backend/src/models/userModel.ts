@@ -13,6 +13,9 @@ const UserSchema = new Schema({
   dislikedMovies: [{ title: String, id: Number }],
 });
 
+// I grabbed this from a previous project. I run into a timeout error when trying to encrypt a users
+// password before sending the data to Mongoose as it takes too long to encrypt the password before
+// sending it to Mongoose to be saved into the MongoDB instance. Doing it here gets around that.
 UserSchema.pre('save', function (next) {
   const user = this;
 
