@@ -1,68 +1,66 @@
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable func-names */
 import passport from 'passport';
 import GitHubStrategy from 'passport-github';
 import LocalStrategy from 'passport-local';
 import bcrypt from 'bcryptjs';
+import dotenv from 'dotenv';
+import User from './models/userModel';
+
+dotenv.config();
+
+const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
 passport.use(
-	new GitHubStrategy(
-		{
-			clientID: GITHUB_CLIENT_ID,
-			clientSecret: GITHUB_CLIENT_SECRET,
-			callbackURL: 'http://127.0.0.1:3000/auth/github/callback',
-		},
-		function (accessToken, refreshToken, profile, cb) {
-			User.findOrCreate({ githubId: profile.id }, function (err, user) {
-				return cb(err, user);
-			});
-		}
-	)
+  new GitHubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+      callbackURL: 'http://localhost:3000/auth/github/callback',
+    },
+    // todo: need to use the below to go through the already made user model/schema.
+    // todo: the below code block doesn't actually work and need to flesh it out to get it to work
+    // todo: how I want it to.
+    function (accessToken: any, refreshToken: any, profile: any, cb: any) {
+      User.findOne({ githubID: profile.id }, async function (err: any, user: any) {
+        if (!user) {
+          const newUser = await User.create({
+            githubID: profile.id,
+          });
+          return cb(null, newUser);
+        }
+        return cb(err, user);
+      });
+    },
+  ),
 );
 
-passport.use(
-	'login',
-	new LocalStrategy(
-		{
-			usernameField: 'username',
-			passwordField: 'password',
-		},
-		async (username, password, done) => {
-			try {
-				const user = await User.findOne({ username });
+// todo: Need to find a way to use Github authentication with JWT so that I can store it in that
+// todo: rather than in a cookie session.
+// const jwtOptions = {
+//   jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token'),
+//   secretOrKey: 'TOP_SECRET',
+// };
 
-				if (!user) {
-					return done(null, false, { message: 'User not found' });
-				}
+// passport.use(
+//   new JWTstrategy(jwtOptions, function (jwtPayload, done) {
+//     User.findOne({ id: jwtPayload.id }, function (err, user) {
+//       if (err) {
+//         return done(err, false);
+//       }
+//       if (user) {
+//         return done(null, user);
+//       } else {
+//         return done(null, false);
+//       }
+//     });
+//   })
+// );
 
-				const validate = await bcrypt.compare(password, user.password);
-
-				if (!validate) {
-					return done(null, false, { message: 'Wrong Password' });
-				}
-
-				return done(null, user, { message: 'Logged in Successfully' });
-			} catch (error) {
-				return done(error);
-			}
-		}
-	)
-);
-
-const jwtOptions = {
-	jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token'),
-	secretOrKey: 'TOP_SECRET',
-};
-
-passport.use(
-	new JWTstrategy(jwtOptions, function (jwtPayload, done) {
-		User.findOne({ id: jwtPayload.id }, function (err, user) {
-			if (err) {
-				return done(err, false);
-			}
-			if (user) {
-				return done(null, user);
-			} else {
-				return done(null, false);
-			}
-		});
-	})
-);
+passport.serializeUser(function (user: any, cb) {
+  cb(null, user.id);
+});
+passport.deserializeUser(function (id: any, cb) {
+  cb(null, id);
+});
