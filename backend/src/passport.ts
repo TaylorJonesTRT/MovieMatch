@@ -1,9 +1,13 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable func-names */
 import passport from 'passport';
-import GitHubStrategy from 'passport-github';
-import JWTStrtegy from 'passport-jwt';
+import passportGitHub from 'passport-github';
+import passportJWT from 'passport-jwt';
 import User from './models/userModel';
+
+const GitHubStrategy = passportGitHub.Strategy;
+const JWTStrategy = passportJWT.Strategy;
+const { ExtractJwt } = passportJWT;
 
 passport.use(
   new GitHubStrategy(
@@ -24,10 +28,10 @@ passport.use(
             likedMovies: [],
             dislikedMovies: [],
           });
-          return cb(null, newUser);
+          return cb(null, newUser, { message: 'New user added to database. Loggin in.' });
         }
         // User already in database, logging in.
-        return cb(null, user);
+        return cb(null, user, { message: 'User found in database, logging in' });
       });
     },
   ),
@@ -35,25 +39,26 @@ passport.use(
 
 // todo: Need to find a way to use Github authentication with JWT so that I can store it in that
 // todo: rather than in a cookie session.
-// const jwtOptions = {
-//   jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token'),
-//   secretOrKey: 'TOP_SECRET',
-// };
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromUrlQueryParameter('secret_token'),
+  secretOrKey: 'TOP_SECRET',
+  issuer: 'Github',
+  audience: 'MovieMatch',
+};
 
-// passport.use(
-//   new JWTstrategy(jwtOptions, function (jwtPayload, done) {
-//     User.findOne({ id: jwtPayload.id }, function (err, user) {
-//       if (err) {
-//         return done(err, false);
-//       }
-//       if (user) {
-//         return done(null, user);
-//       } else {
-//         return done(null, false);
-//       }
-//     });
-//   })
-// );
+passport.use(
+  new JWTStrategy(jwtOptions, function (jwtPayload: any, done: any) {
+    User.findOne({ id: jwtPayload.id }, function (err: any, user: any) {
+      if (err) {
+        return done(err, false);
+      }
+      if (user) {
+        return done(null, user);
+      }
+      return done(null, false);
+    });
+  }),
+);
 
 passport.serializeUser(function (user: any, cb) {
   cb(null, user);
