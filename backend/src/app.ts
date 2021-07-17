@@ -17,11 +17,10 @@ const app = express();
 if (!process.env.MONGO_URL) {
   process.exit(1);
 }
-// Commenting out these next few lines until I am ready to setup and use Mongo for the project
-// const mongoDB = process.env.MONGO_URL;
-// mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-// const db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+const mongoDB = process.env.MONGO_URL;
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(
   session({

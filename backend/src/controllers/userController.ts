@@ -6,7 +6,7 @@ import { body, validationResult } from 'express-validator';
 import async from 'async';
 import User from '../models/userModel';
 
-exports.showLikedMovies = async function (req: any, res: any , next: any) {
+exports.showLikedMovies = async function (req: any, res: any, next: any) {
   const user = await User.findById(req.body.userID);
   res.json({
     likedMovies: user.likedMovies,

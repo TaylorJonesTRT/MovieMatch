@@ -1,9 +1,9 @@
 import express from 'express';
+import authenticate from './auth/authenticate';
 import movieData from './movie/movieData';
 
 // const express = require('express');
 // import passport from 'passport';
-// const authenticate = require('./authenticate');
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.get('/', (req, res) => res.json({
 
 app.use('/movie/', movieData);
 
-// router.use('/auth', authenticate);
+app.use('/auth/', authenticate);
 // router.use('/posts', passport.authenticate('jwt', { session: false }), posts);
 // router.use('/test', passport.authenticate('jwt', { session: false }), test);
 

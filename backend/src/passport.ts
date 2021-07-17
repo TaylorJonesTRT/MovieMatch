@@ -2,35 +2,35 @@
 /* eslint-disable func-names */
 import passport from 'passport';
 import GitHubStrategy from 'passport-github';
-import LocalStrategy from 'passport-local';
-import bcrypt from 'bcryptjs';
-import dotenv from 'dotenv';
+import JWTStrtegy from 'passport-jwt';
 import User from './models/userModel';
-
-dotenv.config();
-
-const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
-const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
 passport.use(
   new GitHubStrategy(
     {
       clientID: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-      callbackURL: 'http://localhost:3000/auth/github/callback',
+      callbackURL: 'http://localhost:4000/api/auth/github/callback',
     },
     // todo: need to use the below to go through the already made user model/schema.
     // todo: the below code block doesn't actually work and need to flesh it out to get it to work
     // todo: how I want it to.
     function (accessToken: any, refreshToken: any, profile: any, cb: any) {
       User.findOne({ githubID: profile.id }, async function (err: any, user: any) {
+        if (err) {
+          return cb(err, null);
+        }
+        // If new user, creating an instance of them in the database and then logging in.
         if (!user) {
           const newUser = await User.create({
             githubID: profile.id,
+            likedMovies: [],
+            dislikedMovies: [],
           });
           return cb(null, newUser);
         }
-        return cb(err, user);
+        // User already in database, logging in.
+        return cb(null, user);
       });
     },
   ),
@@ -59,8 +59,8 @@ passport.use(
 // );
 
 passport.serializeUser(function (user: any, cb) {
-  cb(null, user.id);
+  cb(null, user);
 });
-passport.deserializeUser(function (id: any, cb) {
-  cb(null, id);
+passport.deserializeUser(function (user: any, cb) {
+  cb(null, user);
 });
