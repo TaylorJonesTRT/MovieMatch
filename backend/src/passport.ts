@@ -9,6 +9,13 @@ const GitHubStrategy = passportGitHub.Strategy;
 const JWTStrategy = passportJWT.Strategy;
 const { ExtractJwt } = passportJWT;
 
+passport.serializeUser(function (user: any, cb) {
+  cb(null, user);
+});
+passport.deserializeUser(function (user: any, cb) {
+  cb(null, user);
+});
+
 passport.use(
   new GitHubStrategy(
     {
@@ -59,10 +66,3 @@ passport.use(
     });
   }),
 );
-
-passport.serializeUser(function (user: any, cb) {
-  cb(null, user);
-});
-passport.deserializeUser(function (user: any, cb) {
-  cb(null, user);
-});

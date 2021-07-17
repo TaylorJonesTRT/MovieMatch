@@ -33,6 +33,11 @@ function App() {
     setShowDetails(!showDetails);
   };
 
+  const handleGitHubLogin = (event: any) => {
+    event.preventDefault();
+    axios.get('http://localhost:4000/api/auth/github');
+  };
+
   return (
     <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
       {loading ? (
@@ -43,7 +48,10 @@ function App() {
             <div className="w-2/5 self-center">
               <img src={logo} alt="MovieMatch" />
             </div>
-            <div className="user-bar w-3/5 self-center text-right">
+            <div
+              className="user-bar w-3/5 self-center text-right"
+              onClick={handleGitHubLogin}
+            >
               <h1>Login with GitHub</h1>
             </div>
           </header>

@@ -5,6 +5,7 @@ import cors from 'cors';
 import passport from 'passport';
 import mongoose from 'mongoose';
 import session from 'express-session';
+import middleware from './middlewares';
 // const middlewares = require('./middlewares');
 
 import api from './api';
@@ -34,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('dev'));
 app.use(helmet());
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 
 app.get('/', (req: any, res: any) => {
@@ -44,7 +45,8 @@ app.get('/', (req: any, res: any) => {
 app.use('/api/', api);
 
 // app.use(middlewares.notFound);
-// app.use(middlewares.errorHandler);
+app.use(middleware.errorHandler);
+app.use(middleware.isAuthenticated);
 
 // export default app;
 module.exports = app;
