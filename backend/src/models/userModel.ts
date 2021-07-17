@@ -14,23 +14,4 @@ const UserSchema = new Schema({
   dislikedMovies: [{ title: String, id: Number }],
 });
 
-// I grabbed this from a previous project. I run into a timeout error when trying to encrypt a users
-// password before sending the data to Mongoose as it takes too long to encrypt the password before
-// sending it to Mongoose to be saved into the MongoDB instance. Doing it here gets around that.
-// UserSchema.pre('save', function (next) {
-//   const user = this;
-
-//   bcrypt.genSalt(10, function (err: any, salt: any) {
-//     if (err) return next(err);
-
-// eslint-disable-next-line no-shadow
-//     bcrypt.hash(user.password, salt, function (err: any, hash: any) {
-//       if (err) return next(err);
-
-//       user.password = hash;
-//       next();
-//     });
-//   });
-// });
-
 export default mongoose.model('User', UserSchema);

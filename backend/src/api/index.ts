@@ -1,9 +1,8 @@
 import express from 'express';
+import passport from 'passport';
 import authenticate from './auth/authenticate';
 import movieData from './movie/movieData';
 
-// const express = require('express');
-// import passport from 'passport';
 
 const app = express();
 
