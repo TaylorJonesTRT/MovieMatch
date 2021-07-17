@@ -44,7 +44,7 @@ function App() {
               <img src={logo} alt="MovieMatch" />
             </div>
             <div className="user-bar w-3/5 self-center text-right">
-              <h1>test user</h1>
+              <h1>Login with GitHub</h1>
             </div>
           </header>
 
