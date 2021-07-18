@@ -19,7 +19,7 @@ function isAuthenticated(req: any, res: any, next: any) {
   if (req.isAuthenticated()) {
     return next();
   }
-  return res.redirect('http://localhost:4000/api/auth/github');
+  res.redirect('http://localhost:4000/api/auth/github');
 }
 
 export default { errorHandler, isAuthenticated };

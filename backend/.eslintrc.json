@@ -4,6 +4,7 @@
         "node": true
     },
     "extends": [
+        "prettier",
         "airbnb-base"
     ],
     "parser": "@typescript-eslint/parser",
@@ -12,8 +13,10 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "prettier"
     ],
     "rules": {
+        "prettier/prettier": "error"
     }
 }
