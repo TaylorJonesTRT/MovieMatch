@@ -36,6 +36,7 @@ app.get('/github/callback/', (req, res, next) => {
       });
 
       res.cookie('token', token);
+      res.redirect('http://localhost:3000');
     } catch (error) {
       res.redirect('http://localhost:3000');
       return next(error);
