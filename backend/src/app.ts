@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import passport from 'passport';
 import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import middleware from './middlewares';
 // const middlewares = require('./middlewares');
@@ -23,20 +24,13 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.use(
-  session({
-    secret: 'tinderandmoviesohyes',
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 },
-  }),
-);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 app.get('/', (req: any, res: any) => {
   res.json({ message: 'MovieMatch Backend' });
