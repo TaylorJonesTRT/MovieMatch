@@ -11,6 +11,8 @@ function waitFor(millSeconds: any): Promise<any> {
   });
 }
 
+// Processes the data that is returned by the TMDB API and makes sure that a movie is actually
+// returned, that a movie is not an adult movie, and that it has a poster to show.
 const fetchRandomMovie = async (options: any, n: number): Promise<any> => {
   try {
     const latestMovieID = await fetch(`https://api.themoviedb.org/3/movie/latest?api_key=${process.env.TMDB_API_KEY}`)
@@ -48,6 +50,7 @@ const fetchRandomMovie = async (options: any, n: number): Promise<any> => {
   }
 };
 
+// Function for the GET request from the front ends request for a movie
 const getMovieDetails = async function (req: any, res: any, next: any) {
   const randomMovieSelection = await fetchRandomMovie({}, 5);
   return res.json({

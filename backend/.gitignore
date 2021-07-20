@@ -8,6 +8,10 @@
 # testing
 /coverage
 
+#MongoDB Data
+/data
+/src/data
+
 # production
 /build
 
