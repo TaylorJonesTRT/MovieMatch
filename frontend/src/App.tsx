@@ -1,18 +1,24 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { GithubLoginButton } from 'react-social-login-buttons';
 import logo from './static/images/logo.png';
+
+const cookies = new Cookies();
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [movieData, setMovieData] = useState(Object);
   const [moviePoster, setMoviePoster] = useState('');
   const [showDetails, setShowDetails] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -28,6 +34,20 @@ function App() {
     fetchMovieDetails().then(() => setLoading(false));
   }, []);
 
+  // todo: Create a new useEffect below to have the front end check to make sure the user is
+  // todo: authenticated so that movies can be saved when needed.
+  useEffect(() => {
+    const verifyAuth = () => {
+      const token = cookies.get('token');
+      if (token == null) {
+        return setIsLoggedIn(false);
+      }
+      localStorage.setItem('token', token);
+      return setIsLoggedIn(true);
+    };
+    verifyAuth();
+  }, []);
+
   // The below is to have React know when to show the details of a movie or its poster.
   const flipCard = () => {
     setShowDetails(!showDetails);
@@ -35,8 +55,24 @@ function App() {
 
   const handleGitHubLogin = (event: any) => {
     event.preventDefault();
-    axios.get('http://localhost:4000/api/auth/github');
+    window.open('http://localhost:4000/api/auth/github');
   };
+
+  if (!isLoggedIn) {
+    return (
+      <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
+        <div className="logo flex flex-row justify-center">
+          <img src={logo} alt="MovieMatch" />
+        </div>
+        <div
+          className="login flex flex-row justify-center"
+          onClick={handleGitHubLogin}
+        >
+          <GithubLoginButton />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
@@ -48,11 +84,10 @@ function App() {
             <div className="w-2/5 self-center">
               <img src={logo} alt="MovieMatch" />
             </div>
-            <div
-              className="user-bar w-3/5 self-center text-right"
-              onClick={handleGitHubLogin}
-            >
-              <h1>Login with GitHub</h1>
+            <div className="user-bar w-3/5 self-center text-right">
+              <h1>
+                <button onClick={handleGitHubLogin}>Login with GitHub </button>
+              </h1>
             </div>
           </header>
 

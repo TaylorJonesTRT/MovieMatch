@@ -51,8 +51,6 @@ passport.use(
   ),
 );
 
-// todo: Need to find a way to use Github authentication with JWT so that I can store it in that
-// todo: rather than in a cookie session.
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: 'TOP_SECRET',
@@ -62,7 +60,7 @@ const jwtOptions = {
 
 passport.use(
   new JWTStrategy(jwtOptions, function (jwtPayload: any, done: any) {
-    User.findOne({ id: jwtPayload.id }, function (err: any, user: any) {
+    User.findOne({ githubID: jwtPayload.id }, function (err: any, user: any) {
       if (err) {
         return done(err, false);
       }

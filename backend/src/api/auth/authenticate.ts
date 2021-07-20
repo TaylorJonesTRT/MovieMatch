@@ -46,7 +46,7 @@ app.get('/github/callback/', (req, res, next) => {
 
 // This route will be used by the frontend to get a new JWT from whenever one is needed.
 app.get(
-  '/getuser',
+  '/verify',
   middleware.isAuthenticated,
   (req: any, res: any, next: any) => {
     const body = { id: req.user.githubID };
