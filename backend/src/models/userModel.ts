@@ -6,9 +6,24 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-  githubID: { type: String, required: true, },
-  likedMovies: { type: mongoose.SchemaTypes.Mixed, required: true },
-  dislikedMovies: [{ title: String, id: Number }],
+  _id: Number,
+  githubID: { type: String, required: true },
+  likedMovies: [
+    {
+      title: String,
+      id: String,
+      description: String,
+      runTime: String,
+    },
+  ],
+  dislikedMovies: [
+    {
+      title: String,
+      id: String,
+      description: String,
+      runTime: String,
+    },
+  ],
 });
 
 export default mongoose.model('User', UserSchema);

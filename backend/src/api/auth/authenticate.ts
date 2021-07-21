@@ -45,27 +45,27 @@ app.get('/github/callback/', (req, res, next) => {
 });
 
 // This route will be used by the frontend to get a new JWT from whenever one is needed.
-app.get(
-  '/verify',
-  middleware.isAuthenticated,
-  (req: any, res: any, next: any) => {
-    const body = { id: req.user.githubID };
-    const token = jwt.sign(
-      {
-        id: req.user.githubID,
-        iat: new Date().getTime() / 1000,
-        expiresIn: '1d',
-      },
-      // eslint-disable-next-line comma-dangle
-      process.env.JWT_SECRET!
-    );
+// app.get(
+//   '/verify',
+//   middleware.isAuthenticated,
+//   (req: any, res: any, next: any) => {
+//     const body = { id: req.user.githubID };
+//     const token = jwt.sign(
+//       {
+//         id: req.user.githubID,
+//         iat: new Date().getTime() / 1000,
+//         expiresIn: '1d',
+//       },
+//       // eslint-disable-next-line comma-dangle
+//       process.env.JWT_SECRET!
+//     );
 
-    return res.json({
-      body,
-      token,
-    });
-  }
-);
+//     return res.json({
+//       body,
+//       token,
+//     });
+//   }
+// );
 
 app.get('logout', (req, res, next) => {
   req.logout();

@@ -24,6 +24,8 @@ passport.use(
       callbackURL: 'http://localhost:4000/api/auth/github/callback',
     },
     function (accessToken: any, refreshToken: any, profile: any, cb: any) {
+      const profileIdAsInt: Number = parseInt(profile.id);
+
       User.findOne(
         { githubID: profile.id },
         async function (err: any, user: any) {
@@ -33,6 +35,7 @@ passport.use(
           // If new user, creating an instance of them in the database and then logging in.
           if (!user) {
             const newUser = await User.create({
+              _id: profileIdAsInt,
               githubID: profile.id,
               likedMovies: [],
               dislikedMovies: [],

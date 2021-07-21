@@ -6,6 +6,7 @@ const MovieSchema = new Schema({
   title: { type: String, required: true, maxLength: 150 },
   description: { type: String, required: true, maxLength: 400 },
   runTime: { type: Number, required: true },
+  id: { type: String, required: true },
 });
 
 // Exporting

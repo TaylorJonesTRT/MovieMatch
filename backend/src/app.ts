@@ -40,7 +40,7 @@ app.use('/api/', api);
 
 // app.use(middlewares.notFound);
 app.use(middleware.errorHandler);
-app.use(middleware.isAuthenticated);
+// app.use(middleware.isAuthenticated);
 
 // export default app;
 module.exports = app;
