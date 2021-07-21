@@ -4,16 +4,15 @@ const userController = require('../../controllers/userController');
 
 const app = express();
 
-app.get('/', (req, res) => {
-	res.json({
-		message: 'testing, help me',
-	})
-});
+// app.get('/', (req, res) => {
+// 	res.json({
+// 		message: 'testing, help me',
+// 	})
+// });
 // app.get('/user/liked-movies', userController.showLikedMovies);
 
-// Both RESTful requests below will use the same function since the request will
-// show if the movie was liked or disliked and use conditionals to decide where to put them
+// Both liked and disliked movies POST requests will be sent through here and will be seperatred
+// into their proper locations by and if statement.
 app.post('/save-movie/', userController.saveMovie);
-// app.post('/user/dislike-movie', userController.saveMovie);
 
 export default app;

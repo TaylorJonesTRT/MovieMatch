@@ -46,20 +46,16 @@ exports.saveMovie = [
       id: req.body.movieID,
     };
 
-    console.log(movie);
-    
     // Creating a new movie in the database for the user, if errors throwing errors instead.
     if (req.body.liked === 'liked') {
       activeUser.likedMovies.push(movie);
       if (!errors.isEmpty()) {
-        console.log(errors);
         res.json({
           errors,
         });
       } else {
         activeUser.save((err: any) => {
           if (err) {
-            console.log(err);
             return next(err);
           }
           return res.json({
@@ -71,17 +67,14 @@ exports.saveMovie = [
     } else if (req.body.liked === 'disliked') {
       activeUser.dislikedMovies.push(movie);
       if (!errors.isEmpty()) {
-        console.log(errors);
         res.json({
           errors,
         });
       } else {
         activeUser.save((err: any) => {
           if (err) {
-            console.log(err);
             return next(err);
           }
-          console.log('movie added to dislike');
           return res.json({
             message: 'Movie added to list',
             movie,
