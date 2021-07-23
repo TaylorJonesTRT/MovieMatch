@@ -24,7 +24,19 @@ function App() {
   // This hook is being used to grab the movie data from the backend api and to set that data into
   // its correct state instance. Also changing state of loading to display the movie data rather
   // than the information that is loaded when loading is set to true.
-  useEffect(() => {});
+  useEffect(() => {
+    setLoading(true);
+    const fetchMovieDetails = async (): Promise<any> => {
+      const movie = await axios('http://localhost:4000/api/movie/random').then(
+        (data) => data
+      );
+      const poster = `https://www.themoviedb.org/t/p/original${movie.data.movie.poster_path}`;
+      setMovieData({ movieData: movie });
+      setMoviePoster(poster);
+    };
+
+    fetchMovieDetails().then(() => setLoading(false));
+  }, [reload]);
 
   // This useEffect looks to make sure that there is a cookie named 'token' at all times. If there is
   // then that means the user is logged in. If not it makes the page go back to it's initial state

@@ -13,17 +13,15 @@ const cookies = new Cookies();
 
 const MyStuff = () => {
   useEffect(() => {
-    const verifyAuth = async () => {
-      const token = await cookies.get('token');
-      if (token == null) {
-        localStorage.removeItem('token');
-        return <Redirect to="/" />;
+    const checkIfLoggedIn = () => {
+      const token = cookies.get('token');
+      if (token === null || localStorage.getItem('token') === null) {
+        // eslint-disable-next-line no-restricted-globals
+        location.assign('http://localhost:3000');
       }
-      localStorage.setItem('token', token);
-      return setIsLoggedIn(true);
     };
-    verifyAuth();
-  });
+    checkIfLoggedIn();
+  }, []);
 
   const logout = () => {
     cookies.remove('token');
