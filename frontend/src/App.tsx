@@ -129,7 +129,9 @@ function App() {
       <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
         <header className="w-full h-1/6 flex flex-row content-center p-2.5">
           <div className="w-2/5 self-center">
-            <img src={logo} alt="MovieMatch" />
+            <a href="http://localhost:3000">
+              <img src={logo} alt="MovieMatch" />
+            </a>
           </div>
           <div className="user-bar w-3/5 self-center text-right">
             <h1>
@@ -169,7 +171,9 @@ function App() {
     <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
       <header className="w-full h-1/6 flex flex-row content-center p-2.5">
         <div className="w-2/5 self-center">
-          <img src={logo} alt="MovieMatch" />
+          <a href="http://localhost:3000">
+            <img src={logo} alt="MovieMatch" />
+          </a>
         </div>
         <div className="user-bar w-3/5 self-center text-right">
           <h1>
