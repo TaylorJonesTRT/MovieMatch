@@ -13,12 +13,6 @@ import logo from './static/images/logo.png';
 
 const cookies = new Cookies();
 
-function useForceUpdate() {
-  const [value, setValue] = useState(0); // integer state
-  // eslint-disable-next-line no-shadow
-  return () => setValue((value) => value + 1); // update the state to force render
-}
-
 function App() {
   const [loading, setLoading] = useState(true);
   const [movieData, setMovieData] = useState(Object);
@@ -27,39 +21,26 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [reload, setReload] = useState(0);
 
-  const forceUpdate = useForceUpdate();
-
   // This hook is being used to grab the movie data from the backend api and to set that data into
   // its correct state instance. Also changing state of loading to display the movie data rather
   // than the information that is loaded when loading is set to true.
-  useEffect(() => {
-    setLoading(true);
-    const fetchMovieDetails = async (): Promise<any> => {
-      const movie = await axios('http://localhost:4000/api/movie/random').then(
-        (data) => data
-      );
-      const poster = `https://www.themoviedb.org/t/p/original${movie.data.movie.poster_path}`;
-      setMovieData({ movieData: movie });
-      setMoviePoster(poster);
-    };
-
-    fetchMovieDetails().then(() => setLoading(false));
-  }, [reload]);
+  useEffect(() => {});
 
   // This useEffect looks to make sure that there is a cookie named 'token' at all times. If there is
   // then that means the user is logged in. If not it makes the page go back to it's initial state
   // and have the user click the login with github button again.
   useEffect(() => {
-    const verifyAuth = () => {
-      const token = cookies.get('token');
+    const verifyAuth = async () => {
+      const token = await cookies.get('token');
       if (token == null) {
+        localStorage.removeItem('token');
         return setIsLoggedIn(false);
       }
       localStorage.setItem('token', token);
       return setIsLoggedIn(true);
     };
     verifyAuth();
-  }, []);
+  }, [reload]);
 
   const handleGitHubLogin = (event: any) => {
     event.preventDefault();
@@ -107,7 +88,7 @@ function App() {
           liked: 'liked',
         },
       });
-      forceUpdate();
+      setReload(reload + 1);
     }
   };
 
@@ -139,7 +120,9 @@ function App() {
             <img src={logo} alt="MovieMatch" />
           </div>
           <div className="user-bar w-3/5 self-center text-right">
-            <h1>My Stuff</h1>
+            <h1>
+              <a href="/my-stuff">My Stuff</a>
+            </h1>
           </div>
         </header>
 
@@ -177,7 +160,9 @@ function App() {
           <img src={logo} alt="MovieMatch" />
         </div>
         <div className="user-bar w-3/5 self-center text-right">
-          <h1>My Stuff</h1>
+          <h1>
+            <a href="/my-stuff">My Stuff</a>
+          </h1>
         </div>
       </header>
 
@@ -207,7 +192,6 @@ function App() {
             className="dislike-btn text-red-400 self-center"
             onClick={() => {
               sendMovie('dislike');
-              forceUpdate();
             }}
           >
             <FontAwesomeIcon icon={faThumbsDown} />
@@ -216,7 +200,6 @@ function App() {
             className="like-btn text-green-600"
             onClick={() => {
               sendMovie('like');
-              forceUpdate();
             }}
           >
             <FontAwesomeIcon icon={faHeart} />

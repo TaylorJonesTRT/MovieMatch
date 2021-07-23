@@ -3,19 +3,17 @@
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable func-names */
 import { body, validationResult } from 'express-validator';
-import async from 'async';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel';
 
-exports.showLikedMovies = async function (req: any, res: any, next: any) {
+const showLikedMovies = async function (req: any, res: any, next: any) {
   const user = await User.findById(req.body.userID);
   res.json({
     likedMovies: user.likedMovies,
   });
 };
 
-// todo: Need to refactor this to make it compatible with what the frontend will be sending.
-exports.saveMovie = [
+const saveMovie = [
   // Validating and sanitization of data
   body('movieTitle', 'Movie title must not be empty').trim().escape(),
   body('movieDescription', 'what is the movie about?').trim().escape(),
@@ -29,6 +27,7 @@ exports.saveMovie = [
     const errors = validationResult(req);
 
     const decodedJWT: any = jwt.decode(req.headers['x-access-token']);
+    // eslint-disable-next-line radix
     const userId = parseInt(decodedJWT.id);
     const activeUser = await User.findOne(
       { githubID: userId },
@@ -84,3 +83,5 @@ exports.saveMovie = [
     }
   },
 ];
+
+export default { showLikedMovies, saveMovie };

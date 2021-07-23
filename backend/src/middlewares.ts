@@ -1,8 +1,8 @@
-// function notFound(req, res, next) {
-//   res.status(404);
-//   const error = new Error(`🔍 - Not Found - ${req.originalUrl}`);
-//   next(error);
-// }
+function notFound(req: any, res: any, next: any) {
+  res.status(404);
+  const error = new Error(`🔍 - Not Found - ${req.originalUrl}`);
+  next(error);
+}
 
 /* eslint-disable no-unused-vars */
 function errorHandler(err: any, req: any, res: any, next: any) {
@@ -15,6 +15,7 @@ function errorHandler(err: any, req: any, res: any, next: any) {
   });
 }
 
+// eslint-disable-next-line consistent-return
 function isAuthenticated(req: any, res: any, next: any) {
   if (req.isAuthenticated()) {
     return next();
@@ -22,4 +23,4 @@ function isAuthenticated(req: any, res: any, next: any) {
   res.redirect('http://localhost:4000/api/auth/github');
 }
 
-export default { errorHandler, isAuthenticated };
+export default { notFound, errorHandler, isAuthenticated };

@@ -1,15 +1,10 @@
 import express from 'express';
-
-const userController = require('../../controllers/userController');
+import userController from '../../controllers/userController';
 
 const app = express();
 
-// app.get('/', (req, res) => {
-// 	res.json({
-// 		message: 'testing, help me',
-// 	})
-// });
-// app.get('/user/liked-movies', userController.showLikedMovies);
+// Route to acquire all liked movies by a user to display them all.
+app.get('/user/liked-movies', userController.showLikedMovies);
 
 // Both liked and disliked movies POST requests will be sent through here and will be seperatred
 // into their proper locations by and if statement.

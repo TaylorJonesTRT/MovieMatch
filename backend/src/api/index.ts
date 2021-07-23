@@ -7,12 +7,12 @@ import userRoutes from './user/user';
 const app = express();
 
 app.get('/', (req, res) => res.json({
-  message: 'Testing',
-}));
-
-app.use('/movie/', movieData);
+  message: 'MovieMatch API Routes',
+}),
+);
 
 app.use('/auth/', authenticate);
+app.use('/movie/', movieData);
 app.use('/user/', userRoutes);
 // router.use('/posts', passport.authenticate('jwt', { session: false }), posts);
 // router.use('/test', passport.authenticate('jwt', { session: false }), test);

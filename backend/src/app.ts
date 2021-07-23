@@ -38,7 +38,7 @@ app.get('/', (req: any, res: any) => {
 
 app.use('/api/', api);
 
-// app.use(middlewares.notFound);
+app.use(middleware.notFound);
 app.use(middleware.errorHandler);
 // app.use(middleware.isAuthenticated);
 
