@@ -27,9 +27,13 @@ function App() {
   useEffect(() => {
     setLoading(true);
     const fetchMovieDetails = async (): Promise<any> => {
-      const movie = await axios('http://localhost:4000/api/movie/random').then(
-        (data) => data
-      );
+      const movie = await axios({
+        method: 'GET',
+        url: 'http://localhost:4000/api/movie/random',
+        headers: {
+          'X-ACCESS-TOKEN': cookies.get('token'),
+        },
+      }).then((data) => data);
       const poster = `https://www.themoviedb.org/t/p/original${movie.data.movie.poster_path}`;
       setMovieData({ movieData: movie });
       setMoviePoster(poster);
