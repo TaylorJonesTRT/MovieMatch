@@ -6,12 +6,16 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaTicketAlt, FaTrashAlt } from 'react-icons/fa';
 import Cookies from 'universal-cookie';
 import logo from '../static/images/logo.png';
 
 const cookies = new Cookies();
 
 const MyStuff = () => {
+  const [movies, setMovies] = useState<any[]>([]);
+
   // This useEffect checks on every re-render if the user has a JWT saved in their cookies
   // or in their localStorage. If not it redirects them to the homepage.
   useEffect(() => {
@@ -25,12 +29,43 @@ const MyStuff = () => {
     checkIfLoggedIn();
   }, []);
 
+  // useEffect to send a GET request to the backend to feth the logged in users saved liked movies
+  useEffect(() => {
+    const getLikedMovies = async () => {
+      const likedMovies = await axios({
+        method: 'GET',
+        url: 'http://localhost:4000/api/user/liked-movies/',
+        headers: {
+          'X-ACCESS-TOKEN': cookies.get('token'),
+        },
+      });
+      setMovies(likedMovies.data.likedMovies);
+    };
+    getLikedMovies();
+  }, []);
+
   const logout = () => {
     cookies.remove('token');
     localStorage.removeItem('token');
     // eslint-disable-next-line no-restricted-globals
     location.reload();
     return false;
+  };
+
+  const removeMovie = (id: string) => {
+    console.log(id);
+    axios({
+      method: 'POST',
+      url: 'http://localhost:4000/api/user/delete-movie',
+      headers: {
+        'X-ACCESS-TOKEN': cookies.get('token'),
+        'content-type': 'application/json',
+      },
+      data: {
+        movieId: id,
+      },
+      // eslint-disable-next-line no-restricted-globals
+    }).then((res) => location.reload());
   };
 
   return (
@@ -49,7 +84,28 @@ const MyStuff = () => {
       </header>
 
       <div className="content w-full h-5/6">
-        <h1>My Stuff</h1>
+        <div className="saved-movies">
+          {movies.map((movie: any) => (
+            <ul
+              className="movies grid grid-cols-3 justify-items-center text-center pb-1.5 pt-1 border-b-2 border-gray-200"
+              key={movie.movieId}
+            >
+              <li className="movie-icon">
+                <FaTicketAlt />
+              </li>
+              <li className="movie-title">{movie.title}</li>
+              <li className="delete-icon">
+                <button
+                  onClick={() => {
+                    removeMovie(movie.movieId);
+                  }}
+                >
+                  <FaTrashAlt />
+                </button>
+              </li>
+            </ul>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -76,9 +76,8 @@ function App() {
         },
         data: {
           movieTitle: movieData.movieData.data.movie.original_title,
-          movieDescriptions: movieData.movieData.data.movie.overview,
           movieRunTime: movieData.movieData.data.movie.runtime,
-          movieID: movieData.movieData.data.movie.id,
+          movieId: movieData.movieData.data.movie.id,
           liked: 'disliked',
         },
       });
@@ -94,9 +93,8 @@ function App() {
         },
         data: {
           movieTitle: movieData.movieData.data.movie.original_title,
-          movieDescriptions: movieData.movieData.data.movie.overview,
           movieRunTime: movieData.movieData.data.movie.runtime,
-          movieID: movieData.movieData.data.movie.id,
+          movieId: movieData.movieData.data.movie.id,
           liked: 'liked',
         },
       });
