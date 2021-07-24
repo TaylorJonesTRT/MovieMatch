@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import User from '../models/userModel';
 
-exports.githubAuth = (req: any, res: any, next: any) => {
+const githubAuth = (req: any, res: any, next: any) => {
   passport.authenticate('github', (err, user, info) => {
     try {
       if (err || !user) {
@@ -18,7 +18,7 @@ exports.githubAuth = (req: any, res: any, next: any) => {
         if (error) return next(error);
       });
 
-      res.cookie('token', token);
+      res.cookie('token', token, { maxAge: 86400000 });
       res.redirect('http://localhost:3000');
     } catch (error) {
       res.redirect('http://localhost:3000');
@@ -27,6 +27,8 @@ exports.githubAuth = (req: any, res: any, next: any) => {
   })(req, res, next);
 };
 
-exports.logout = (req: any, res: any, next: any) => {
+const logout = (req: any, res: any, next: any) => {
   req.logout();
 };
+
+export default { githubAuth, logout };

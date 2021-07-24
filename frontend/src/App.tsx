@@ -13,12 +13,6 @@ import logo from './static/images/logo.png';
 
 const cookies = new Cookies();
 
-function useForceUpdate() {
-  const [value, setValue] = useState(0); // integer state
-  // eslint-disable-next-line no-shadow
-  return () => setValue((value) => value + 1); // update the state to force render
-}
-
 function App() {
   const [loading, setLoading] = useState(true);
   const [movieData, setMovieData] = useState(Object);
@@ -26,8 +20,6 @@ function App() {
   const [showDetails, setShowDetails] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [reload, setReload] = useState(0);
-
-  const forceUpdate = useForceUpdate();
 
   // This hook is being used to grab the movie data from the backend api and to set that data into
   // its correct state instance. Also changing state of loading to display the movie data rather
@@ -50,16 +42,17 @@ function App() {
   // then that means the user is logged in. If not it makes the page go back to it's initial state
   // and have the user click the login with github button again.
   useEffect(() => {
-    const verifyAuth = () => {
-      const token = cookies.get('token');
+    const verifyAuth = async () => {
+      const token = await cookies.get('token');
       if (token == null) {
+        localStorage.removeItem('token');
         return setIsLoggedIn(false);
       }
       localStorage.setItem('token', token);
       return setIsLoggedIn(true);
     };
     verifyAuth();
-  }, []);
+  }, [reload]);
 
   const handleGitHubLogin = (event: any) => {
     event.preventDefault();
@@ -83,9 +76,8 @@ function App() {
         },
         data: {
           movieTitle: movieData.movieData.data.movie.original_title,
-          movieDescriptions: movieData.movieData.data.movie.overview,
           movieRunTime: movieData.movieData.data.movie.runtime,
-          movieID: movieData.movieData.data.movie.id,
+          movieId: movieData.movieData.data.movie.id,
           liked: 'disliked',
         },
       });
@@ -101,13 +93,12 @@ function App() {
         },
         data: {
           movieTitle: movieData.movieData.data.movie.original_title,
-          movieDescriptions: movieData.movieData.data.movie.overview,
           movieRunTime: movieData.movieData.data.movie.runtime,
-          movieID: movieData.movieData.data.movie.id,
+          movieId: movieData.movieData.data.movie.id,
           liked: 'liked',
         },
       });
-      forceUpdate();
+      setReload(reload + 1);
     }
   };
 
@@ -136,16 +127,20 @@ function App() {
       <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
         <header className="w-full h-1/6 flex flex-row content-center p-2.5">
           <div className="w-2/5 self-center">
-            <img src={logo} alt="MovieMatch" />
+            <a href="http://localhost:3000">
+              <img src={logo} alt="MovieMatch" />
+            </a>
           </div>
           <div className="user-bar w-3/5 self-center text-right">
-            <h1>My Stuff</h1>
+            <h1>
+              <a href="/my-stuff">My Stuff</a>
+            </h1>
           </div>
         </header>
 
         <div className="content w-full h-5/6">
           <div
-            className="movie-card bg-opacity-0 w-10/12 h-96 flex flex-col justify-center p-2 shadow-2xl m-auto overflow-clip ring-2 ring-gray-300"
+            className="movie-card bg-opacity-0 w-10/12 h-96 flex flex-col justify-center p-2 shadow-2xl m-auto overflow-clip ring-2 ring-gray-300 animate-pulse"
             onClick={flipCard}
           >
             <h1 className="text-center">Loading Movie</h1>
@@ -174,10 +169,14 @@ function App() {
     <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
       <header className="w-full h-1/6 flex flex-row content-center p-2.5">
         <div className="w-2/5 self-center">
-          <img src={logo} alt="MovieMatch" />
+          <a href="http://localhost:3000">
+            <img src={logo} alt="MovieMatch" />
+          </a>
         </div>
         <div className="user-bar w-3/5 self-center text-right">
-          <h1>My Stuff</h1>
+          <h1>
+            <a href="/my-stuff">My Stuff</a>
+          </h1>
         </div>
       </header>
 
@@ -207,7 +206,6 @@ function App() {
             className="dislike-btn text-red-400 self-center"
             onClick={() => {
               sendMovie('dislike');
-              forceUpdate();
             }}
           >
             <FontAwesomeIcon icon={faThumbsDown} />
@@ -216,7 +214,6 @@ function App() {
             className="like-btn text-green-600"
             onClick={() => {
               sendMovie('like');
-              forceUpdate();
             }}
           >
             <FontAwesomeIcon icon={faHeart} />

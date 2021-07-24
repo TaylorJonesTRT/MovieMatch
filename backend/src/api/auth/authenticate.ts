@@ -3,9 +3,9 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import middleware from '../../middlewares';
+import authController from '../../controllers/authController';
 
 const app = express.Router();
-const authController = require('../../controllers/authController');
 
 app.get('/github/', passport.authenticate('github'));
 app.get('/github/callback/', authController.githubAuth);

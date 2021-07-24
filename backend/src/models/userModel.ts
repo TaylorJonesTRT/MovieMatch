@@ -11,17 +11,15 @@ const UserSchema = new Schema({
   likedMovies: [
     {
       title: String,
-      id: String,
-      description: String,
       runTime: String,
+      movieId: String,
     },
   ],
   dislikedMovies: [
     {
       title: String,
-      id: String,
-      description: String,
       runTime: String,
+      movieId: String,
     },
   ],
 });
