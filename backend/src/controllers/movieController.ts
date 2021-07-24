@@ -18,7 +18,7 @@ function waitFor(millSeconds: any): Promise<any> {
 const fetchRandomMovie = async (
   options: any,
   n: number,
-  token: string,
+  token: any,
 ): Promise<any> => {
   try {
     const latestMovieID = await fetch(
@@ -29,21 +29,26 @@ const fetchRandomMovie = async (
     const randomMovieID = Math.floor(Math.random() * latestMovieID);
     const randomMovieSelection = await fetch(
       `https://api.themoviedb.org/3/movie/${randomMovieID}?api_key=${process.env.TMDB_API_KEY}`,
-    ).then((data) => data.json);
+    ).then((data) => data.json());
 
     const jwtToken: any = jwt.decode(token);
     const userId = parseInt(jwtToken.id);
-    const user = await User.findOne(
-      { githubId: userId },
+    const activeUser = await User.findOne(
+      { githubID: userId },
       (err: any, user: any) => {
         if (err) {
-          return console.log(err);
+          console.log(err);
+          throw Error(err);
         }
         return user;
       },
     );
 
-    if (user.likedMovies.some((movie) => movie.movieId === randomMovieSelection.id)) {
+    const alreadySaved = await activeUser.likedMovies.some(
+      (movie: any) => randomMovieSelection.id === movie.id,
+    );
+
+    if (alreadySaved) {
       console.log('Movie already liked or disliked, refetching');
       await waitFor(100 * n);
       return fetchRandomMovie({}, n - 1, token);
@@ -52,12 +57,12 @@ const fetchRandomMovie = async (
     if (randomMovieSelection.status_code === 34) {
       console.log('404 error, refetching');
       await waitFor(100 * n);
-      return fetchRandomMovie({}, n - 1, token);
+      return fetchRandomMovie({}, n + 1, token);
     }
     if (randomMovieSelection.adult) {
       console.log('Refeteching due to adult movie');
       await waitFor(100 * n);
-      return fetchRandomMovie({}, n - 1, token);
+      return fetchRandomMovie({}, n + 1, token);
     }
     // eslint-disable-next-line max-len
     if (
@@ -66,17 +71,17 @@ const fetchRandomMovie = async (
     ) {
       console.log('movie has no poster, skipping');
       await waitFor(100 * n);
-      return fetchRandomMovie({}, n - 1, token);
+      return fetchRandomMovie({}, n + 1, token);
     }
 
     // Successful movie grab
     return randomMovieSelection;
   } catch (err) {
-    if (n === 1) {
-      throw err('All attempts failed');
+    if (n === 10) {
+      throw Error('All attempts failed');
     }
     await waitFor(100 * n);
-    return fetchRandomMovie({}, n - 1, token);
+    return fetchRandomMovie({}, n + 1, token);
   }
 };
 
@@ -84,7 +89,7 @@ const fetchRandomMovie = async (
 const getMovieDetails = async function (req: any, res: any, next: any) {
   const randomMovieSelection = await fetchRandomMovie(
     {},
-    5,
+    0,
     req.headers['x-access-token'],
   );
   return res.json({
