@@ -140,7 +140,7 @@ function App() {
 
         <div className="content w-full h-5/6">
           <div
-            className="movie-card bg-opacity-0 w-10/12 h-96 flex flex-col justify-center p-2 shadow-2xl m-auto overflow-clip ring-2 ring-gray-300"
+            className="movie-card bg-opacity-0 w-10/12 h-96 flex flex-col justify-center p-2 shadow-2xl m-auto overflow-clip ring-2 ring-gray-300 animate-pulse"
             onClick={flipCard}
           >
             <h1 className="text-center">Loading Movie</h1>

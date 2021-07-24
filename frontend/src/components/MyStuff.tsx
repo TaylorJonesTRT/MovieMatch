@@ -93,7 +93,15 @@ const MyStuff = () => {
               <li className="movie-icon">
                 <FaTicketAlt />
               </li>
-              <li className="movie-title">{movie.title}</li>
+              <li className="movie-title">
+                <a
+                  href={`https://www.themoviedb.org/movie/${movie.movieId}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {movie.title}
+                </a>
+              </li>
               <li className="delete-icon">
                 <button
                   onClick={() => {
