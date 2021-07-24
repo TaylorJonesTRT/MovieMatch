@@ -1,32 +1,43 @@
 ![logo](https://i.imgur.com/JE5v1H6.png)
 
+![image](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)![image](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)![image](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![image](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)![image](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)![image](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+
 MovieMatch! is a web app that I decided to create after having a hard time with my significant other
 when trying to figure out what to watch on any given night.
 
-## Why it was created
+---
 
-After watching a youtube video for a similar idea I decided to try and create something similar but
-implement my own wants/needs into the web app.
+## HOW TO RUN THE APP
 
-The current iteration is actually very simple. When the page reloads a new random movie is shown with
-it's release date, runtime, poster, and a short plot. Currently it grabs from a json file that includes
-every single movie ever made to date. There are no other functions other than reloading for now.
+(This app requires you to already have Mongo installed locally)
 
-In the next version I will be adding/changing/removing some things. Some of the major ones to note would
-be that it will only show movies from main stream streaming services such as Netflix, Hulu, Amazon Prime,
-and Disney Plus. It will also have the option to select which of those to show from so you don't see
-movies that you don't have access too. It will also have a way to actually save the movies you've
-liked to a profile to where you can keep them stored so you won't ever have to remember the ones you
-thought about watching or the ones you really wanted to watch but can't remember the name of at any
-given time. The last major feature to be implemented will be a button, pretty much a button that says
-Watch!, that will take you directly to that movie on the given streaming service that it is on.
+CD into backend/src and create a directory named `data`.
 
-The project will also probably be renamed to something that will fit it more since it will also be
-showing shows/tv shows rather than just movies alone.
+Now run `npm i` to install all of the needed packages
 
-Alongside the above I'll also be migrating from Flask to Django so that I can use their already
-created code for the admin panel and more!
+Run both `mongod --dbpath=./data` and `npm run dev`
 
-## VERSION 2
+Now cd into the frontend folder and also run `npm i` to install all needed packages
 
-Version 2 is currently being actively developed using the MERN stack.
+Run the following command `npm start` and everything should be running!
+
+---
+
+## WHAT WAS USED
+
+This project utilizes Typescript both in the frontend (bootstrapped with create-react-app)
+and the backend (an express based RESTful api server).
+
+The backend itself takes advantage of MongoDB by using Mongoose to interface with it. MongoDB stores
+users and their movies so that they can be queried at a later time (like when viewing all of your
+liked movies in My Stuff!).
+
+User authentication is handled by PassportJS and its GitHub strategy. Users are logged in via GH and
+a cookie is saved (this cookie has also been encrypted to be a JWT). The JWT is sent with
+the requests that need it to authenticate a user to make sure one is logged in and to make sure
+that a movie is being saved to the proper place and user.
+
+All API requests made are done using Axios.
+
+Thank you Fontawesome for the icons!
