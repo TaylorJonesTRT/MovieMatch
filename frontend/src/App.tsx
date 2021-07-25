@@ -129,13 +129,13 @@ function App() {
   if (loading) {
     return (
       <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
-        <header className="w-full h-1/6 flex flex-row content-center p-2.5">
-          <div className="w-2/5 self-center">
+        <header className="w-full h-1/6 flex flex-row content-center p-2.5 md:pl-16 md:pr-16 lg:pl-16 lg:pr-16 lg-laptop:w-4/5 lg-laptop:m-auto">
+          <div className="w-2/5 self-center md:w-2/6 lg-laptop:w-96 4k:w-5/6">
             <a href="http://localhost:3000">
               <img src={logo} alt="MovieMatch" />
             </a>
           </div>
-          <div className="user-bar w-3/5 self-center text-right">
+          <div className="user-bar w-3/5 self-center text-right lg:text-2xl lg-laptop:text-3xl 4k:text-6xl">
             <h1>
               <a href="/my-stuff">My Stuff</a>
             </h1>
@@ -144,23 +144,28 @@ function App() {
 
         <div className="content w-full h-5/6">
           <div
-            className="movie-card bg-opacity-0 w-10/12 h-96 flex flex-col justify-center p-2 shadow-2xl m-auto overflow-clip ring-2 ring-gray-300 animate-pulse"
+            className="movie-card bg-opacity-0 w-60 h-96 flex flex-col justify-center p-2 shadow-2xl m-auto overflow-clip ring-2 ring-gray-300 md:w-72 md:h-4/6 lg:w-96 lg-laptop:w-2/6"
             onClick={flipCard}
           >
-            <h1 className="text-center">Loading Movie</h1>
+            <h1 className="text-center animate-pulse lg:text-xl lg-laptop:text-2xl 4k:text-5xl">
+              Loading Movie
+            </h1>
           </div>
 
           <p className="poster-notice text-center text-xs text-gray-500">
             Click the poster for details
           </p>
-          <div className="choices w-full pt-10 text-5xl grid grid-cols-2 grid-rows-1 grid-flow-row justify-items-center text-center place-content-center">
+          <div className="choices w-1/2 pt-10 text-5xl grid grid-cols-2 gap-36 grid-rows-1 grid-flow-row justify-items-center text-center place-content-center justify-center m-auto md:w-2/6">
             <div
-              className="dislike-btn text-red-400 self-center"
+              className="dislike-btn text-red-400 self-center lg:text-6xl lg-laptop:text-7xl 4k:text-9xl"
               data-name="dislike"
             >
               <FontAwesomeIcon icon={faThumbsDown} />
             </div>
-            <div className="like-btn text-green-600" key="like">
+            <div
+              className="like-btn text-green-600 self-center lg:text-6xl lg-laptop:text-7xl 4k:text-9xl"
+              key="like"
+            >
               <FontAwesomeIcon icon={faHeart} />
             </div>
           </div>
@@ -171,13 +176,13 @@ function App() {
 
   return (
     <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
-      <header className="w-full h-1/6 flex flex-row content-center p-2.5">
-        <div className="w-2/5 self-center">
+      <header className="w-full h-1/6 flex flex-row content-center p-2.5 md:pl-16 md:pr-16 lg:pl-16 lg:pr-16 lg-laptop:w-4/5 lg-laptop:m-auto">
+        <div className="w-2/5 self-center md:w-2/6 lg-laptop:w-96 4k:w-5/6">
           <a href="http://localhost:3000">
             <img src={logo} alt="MovieMatch" />
           </a>
         </div>
-        <div className="user-bar w-3/5 self-center text-right">
+        <div className="user-bar w-3/5 self-center text-right lg:text-2xl lg-laptop:text-3xl 4k:text-6xl">
           <h1>
             <a href="/my-stuff">My Stuff</a>
           </h1>
@@ -186,7 +191,7 @@ function App() {
 
       <div className="content w-full h-5/6">
         <div
-          className="movie-card bg-opacity-0 w-10/12 h-96 flex flex-col justify-center p-2 shadow-2xl m-auto overflow-clip ring-2 ring-gray-300"
+          className="movie-card bg-opacity-0 w-60 h-96 flex flex-col justify-center p-2 shadow-2xl m-auto overflow-clip ring-2 ring-gray-300 md:w-72 md:h-4/6 lg:w-96 lg-laptop:w-2/6"
           onClick={flipCard}
         >
           {showDetails ? (
@@ -202,12 +207,12 @@ function App() {
           )}
         </div>
 
-        <p className="poster-notice text-center text-xs text-gray-500">
+        <p className="poster-notice text-center text-xs text-gray-500 lg:text-sm lg-laptop:text-xl 4k:text-4xl">
           Click the poster for details
         </p>
-        <div className="choices w-full pt-10 text-5xl grid grid-cols-2 grid-rows-1 grid-flow-row justify-items-center text-center place-content-center">
+        <div className="choices w-1/2 pt-10 text-5xl grid grid-cols-2 gap-36 grid-rows-1 grid-flow-row justify-items-center text-center place-content-center justify-center m-auto md:w-2/6">
           <div
-            className="dislike-btn text-red-400 self-center"
+            className="dislike-btn text-red-400 self-center lg:text-6xl lg-laptop:text-7xl 4k:text-9xl"
             onClick={() => {
               sendMovie('dislike');
             }}
@@ -215,7 +220,7 @@ function App() {
             <FontAwesomeIcon icon={faThumbsDown} />
           </div>
           <div
-            className="like-btn text-green-600"
+            className="like-btn text-green-600 self-center lg:text-6xl lg-laptop:text-7xl 4k:text-9xl"
             onClick={() => {
               sendMovie('like');
             }}

@@ -53,7 +53,6 @@ const MyStuff = () => {
   };
 
   const removeMovie = (id: string) => {
-    console.log(id);
     axios({
       method: 'POST',
       url: 'http://localhost:4000/api/user/delete-movie',
@@ -70,13 +69,13 @@ const MyStuff = () => {
 
   return (
     <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
-      <header className="w-full h-1/6 flex flex-row content-center p-2.5">
-        <div className="w-2/5 self-center">
+      <header className="w-full h-1/6 flex flex-row content-center p-2.5 md:pl-16 lg-laptop:w-5/5 lg-laptop:m-auto">
+        <div className="w-2/5 self-center md:w-2/6">
           <a href="http://localhost:3000">
             <img src={logo} alt="MovieMatch" />
           </a>
         </div>
-        <div className="user-bar w-3/5 self-center text-right">
+        <div className="user-bar w-3/5 self-center text-right lg:text-2xl lg-laptop:text-3xl 4k:text-6xl">
           <h1>
             <button onClick={logout}>Logout</button>
           </h1>
@@ -84,7 +83,7 @@ const MyStuff = () => {
       </header>
 
       <div className="content w-full h-5/6">
-        <div className="saved-movies">
+        <div className="saved-movies lg:text-xl lg-laptop:text-3xl 4k:text-5xl">
           {movies.map((movie: any) => (
             <ul
               className="movies grid grid-cols-3 justify-items-center text-center pb-1.5 pt-1 border-b-2 border-gray-200"
