@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable no-unused-vars */
+// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -196,11 +196,15 @@ function App() {
         >
           {showDetails ? (
             <ul>
-              <li>{movieData.movieData.data.movie.original_title}</li>
-              <li className="text-xs">
+              <li className="pl-2 pr-2 pb-1 lg:text-2xl lg-laptop:text-3xl lg-laptop:pb-2 4k:text-6xl 4k:pb-4">
+                {movieData.movieData.data.movie.original_title}
+              </li>
+              <li className="text-xs pl-2 pr-2 lg:text-base lg-laptop:text-xl 4k:text-4xl">
                 {movieData.movieData.data.movie.overview}
               </li>
-              <li>Runtime: {movieData.movieData.data.movie.runtime} Minutes</li>
+              <li className="pl-2 pr-2 pt-1 lg:text-2xl lg-laptop:text-3xl lg-laptop:pt-2 4k:text-6xl 4k:pt-4">
+                Runtime: {movieData.movieData.data.movie.runtime} Minutes
+              </li>
             </ul>
           ) : (
             <img src={moviePoster} alt="movieName" className="h-full" />

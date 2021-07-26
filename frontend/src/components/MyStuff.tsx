@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
@@ -14,7 +14,7 @@ import logo from '../static/images/logo.png';
 const cookies = new Cookies();
 
 const MyStuff = () => {
-  const [movies, setMovies] = useState<any[]>([]);
+  const [movies, setMovies] = useState([]);
 
   // This useEffect checks on every re-render if the user has a JWT saved in their cookies
   // or in their localStorage. If not it redirects them to the homepage.

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.ts",
-  "engines": {"node": "14.17.3" },
+  "engines": {
+    "node": "14.17.3"
+  },
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
