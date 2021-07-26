@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import express from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
@@ -5,9 +7,7 @@ import cors from 'cors';
 import passport from 'passport';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
 import middleware from './middlewares';
-// const middlewares = require('./middlewares');
 
 import api from './api';
 
