@@ -22,7 +22,7 @@ passport.use(
       clientID: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
       callbackURL:
-        'https://mern-moviematch.herokuapp.com/api/auth/github/callback',
+        'https://movie-match-mern.herokuapp.com/api/auth/github/callback',
     },
     function (accessToken: any, refreshToken: any, profile: any, cb: any) {
       const profileIdAsInt: Number = parseInt(profile.id);

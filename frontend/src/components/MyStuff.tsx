@@ -23,7 +23,7 @@ const MyStuff = () => {
       const token = cookies.get('token');
       if (token === null || localStorage.getItem('token') === null) {
         // eslint-disable-next-line no-restricted-globals
-        location.assign('https://mern-moviematch.herokuapp.com/');
+        location.assign('https://movie-match-mern.herokuapp.com/');
       }
     };
     checkIfLoggedIn();
@@ -34,7 +34,7 @@ const MyStuff = () => {
     const getLikedMovies = async () => {
       const likedMovies = await axios({
         method: 'GET',
-        url: 'https://mern-moviematch.herokuapp.com/api/user/liked-movies/',
+        url: 'https://movie-match-mern.herokuapp.com/api/user/liked-movies/',
         headers: {
           'X-ACCESS-TOKEN': cookies.get('token'),
         },
@@ -55,7 +55,7 @@ const MyStuff = () => {
   const removeMovie = (id: string) => {
     axios({
       method: 'POST',
-      url: 'https://mern-moviematch.herokuapp.com/api/user/delete-movie',
+      url: 'https://movie-match-mern.herokuapp.com/api/user/delete-movie',
       headers: {
         'X-ACCESS-TOKEN': cookies.get('token'),
         'content-type': 'application/json',
