@@ -26,7 +26,7 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-app.use(express.static(path.join(__dirname, '../../public')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('dev'));
@@ -40,7 +40,7 @@ app.use('/api/', api);
 //   res.json({ message: 'Invalid Endpoint' });
 // });
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../public/index.html'));
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 app.use(middleware.notFound);
