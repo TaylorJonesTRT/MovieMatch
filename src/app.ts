@@ -42,9 +42,6 @@ app.use('/api/', api);
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../../public/index.html'));
 });
-app.get('/my-stuff', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '../../public/index.html'));
-});
 
 app.use(middleware.notFound);
 app.use(middleware.errorHandler);
