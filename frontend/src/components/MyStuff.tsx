@@ -23,7 +23,7 @@ const MyStuff = () => {
       const token = cookies.get('token');
       if (token === null || localStorage.getItem('token') === null) {
         // eslint-disable-next-line no-restricted-globals
-        location.assign('http://localhost:3000');
+        location.assign('https://mern-moviematch.herokuapp.com/');
       }
     };
     checkIfLoggedIn();
@@ -34,7 +34,7 @@ const MyStuff = () => {
     const getLikedMovies = async () => {
       const likedMovies = await axios({
         method: 'GET',
-        url: 'http://localhost:4000/api/user/liked-movies/',
+        url: 'https://mern-moviematch.herokuapp.com/api/user/liked-movies/',
         headers: {
           'X-ACCESS-TOKEN': cookies.get('token'),
         },
@@ -55,7 +55,7 @@ const MyStuff = () => {
   const removeMovie = (id: string) => {
     axios({
       method: 'POST',
-      url: 'http://localhost:4000/api/user/delete-movie',
+      url: 'https://mern-moviematch.herokuapp.com/api/user/delete-movie',
       headers: {
         'X-ACCESS-TOKEN': cookies.get('token'),
         'content-type': 'application/json',
@@ -71,7 +71,7 @@ const MyStuff = () => {
     <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
       <header className="w-full h-1/6 flex flex-row content-center p-2.5 md:pl-16 lg-laptop:w-5/5 lg-laptop:m-auto">
         <div className="w-2/5 self-center md:w-2/6">
-          <a href="http://localhost:3000">
+          <a href="https://mern-moviematch.herokuapp.com/">
             <img src={logo} alt="MovieMatch" />
           </a>
         </div>

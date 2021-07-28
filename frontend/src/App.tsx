@@ -29,7 +29,7 @@ function App() {
     const fetchMovieDetails = async (): Promise<any> => {
       const movie = await axios({
         method: 'GET',
-        url: 'http://localhost:4000/api/movie/random',
+        url: 'https://mern-moviematch.herokuapp.com/api/movie/random',
         headers: {
           'X-ACCESS-TOKEN': cookies.get('token'),
         },
@@ -60,7 +60,7 @@ function App() {
 
   const handleGitHubLogin = (event: any) => {
     event.preventDefault();
-    window.open('http://localhost:4000/api/auth/github');
+    window.open('https://mern-moviematch.herokuapp.com/api/auth/github');
   };
 
   // The below is to have React know when to show the details of a movie or its poster.
@@ -73,7 +73,7 @@ function App() {
     if (choice === 'dislike') {
       axios({
         method: 'POST',
-        url: 'http://localhost:4000/api/user/save-movie/',
+        url: 'https://mern-moviematch.herokuapp.com/api/user/save-movie/',
         headers: {
           'X-ACCESS-TOKEN': cookies.get('token'),
           'content-type': 'application/json',
@@ -90,7 +90,7 @@ function App() {
     if (choice === 'like') {
       axios({
         method: 'POST',
-        url: 'http://localhost:4000/api/user/save-movie/',
+        url: 'https://mern-moviematch.herokuapp.com/api/user/save-movie/',
         headers: {
           'X-ACCESS-TOKEN': cookies.get('token'),
           'content-type': 'application/json',
@@ -131,7 +131,7 @@ function App() {
       <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
         <header className="w-full h-1/6 flex flex-row content-center p-2.5 md:pl-16 md:pr-16 lg:pl-16 lg:pr-16 lg-laptop:w-4/5 lg-laptop:m-auto">
           <div className="w-2/5 self-center md:w-2/6 lg-laptop:w-96 4k:w-5/6">
-            <a href="http://localhost:3000">
+            <a href="https://mern-moviematch.herokuapp.com/">
               <img src={logo} alt="MovieMatch" />
             </a>
           </div>
@@ -178,7 +178,7 @@ function App() {
     <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
       <header className="w-full h-1/6 flex flex-row content-center p-2.5 md:pl-16 md:pr-16 lg:pl-16 lg:pr-16 lg-laptop:w-4/5 lg-laptop:m-auto">
         <div className="w-2/5 self-center md:w-2/6 lg-laptop:w-96 4k:w-5/6">
-          <a href="http://localhost:3000">
+          <a href="https://mern-moviematch.herokuapp.com/">
             <img src={logo} alt="MovieMatch" />
           </a>
         </div>
