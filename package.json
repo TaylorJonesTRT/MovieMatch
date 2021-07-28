@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.ts",
+  "homepage": "https://movie-match-mern.herokuapp.com/",
   "engines": {
     "node": "14.17.3",
     "npm": "6.14.13"
