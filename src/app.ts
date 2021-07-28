@@ -7,11 +7,11 @@ import cors from 'cors';
 import passport from 'passport';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
-import path from 'path';
 import middleware from './middlewares';
 
-
 import api from './api';
+
+const path = require('path');
 
 require('dotenv').config();
 require('./passport');
@@ -35,15 +35,13 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+app.use('/api/', api);
 app.get('/', (req: any, res: any) => {
-  res.json({ message: 'MovieMatch Backend' });
+  res.json({ message: 'Invalid Endpoint' });
 });
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
-
-app.use('/api/', api);
 
 app.use(middleware.notFound);
 app.use(middleware.errorHandler);
