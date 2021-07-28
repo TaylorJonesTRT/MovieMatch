@@ -7,7 +7,9 @@ import cors from 'cors';
 import passport from 'passport';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
+import path from 'path';
 import middleware from './middlewares';
+
 
 import api from './api';
 
@@ -24,6 +26,7 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan('dev'));
