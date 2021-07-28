@@ -19,9 +19,9 @@ const githubAuth = (req: any, res: any, next: any) => {
       });
 
       res.cookie('token', token, { maxAge: 86400000 });
-      res.redirect('http://localhost:3000');
+      res.redirect('/');
     } catch (error) {
-      res.redirect('http://localhost:3000');
+      res.redirect('/');
       return next(error);
     }
   })(req, res, next);
