@@ -12,6 +12,10 @@ when trying to figure out what to watch on any given night.
 
 (This app requires you to already have Mongo installed locally)
 
+First you will need to create a GitHub OAuth app in your GitHub developer settings.
+
+Take the .env.example that you cloned with the repo and rename it just to .env. Update the variables inside with what you have.
+
 CD into backend/src and create a directory named `data`.
 
 Now run `npm i` to install all of the needed packages
@@ -20,7 +24,7 @@ Run both `mongod --dbpath=./data` and `npm run dev`
 
 Now cd into the frontend folder and also run `npm i` to install all needed packages
 
-Run the following command `npm start` and everything should be running!
+Run the following command `npm start` in both the backend and frontend folders and everything should be running!
 
 ---
 
