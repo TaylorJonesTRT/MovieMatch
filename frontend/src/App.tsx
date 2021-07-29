@@ -131,7 +131,7 @@ function App() {
       <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
         <header className="w-full h-1/6 flex flex-row content-center p-2.5 md:pl-16 md:pr-16 lg:pl-16 lg:pr-16 lg-laptop:w-4/5 lg-laptop:m-auto">
           <div className="w-2/5 self-center md:w-2/6 lg-laptop:w-96 4k:w-5/6">
-            <a href="https://movie-match-mern.herokuapp.com/">
+            <a href="/">
               <img src={logo} alt="MovieMatch" />
             </a>
           </div>
@@ -178,7 +178,7 @@ function App() {
     <div className="App w-screen h-screen bg-gradient-to-b from-gray-200 to-gray-50">
       <header className="w-full h-1/6 flex flex-row content-center p-2.5 md:pl-16 md:pr-16 lg:pl-16 lg:pr-16 lg-laptop:w-4/5 lg-laptop:m-auto">
         <div className="w-2/5 self-center md:w-2/6 lg-laptop:w-96 4k:w-5/6">
-          <a href="https://movie-match-mern.herokuapp.com/">
+          <a href="/">
             <img src={logo} alt="MovieMatch" />
           </a>
         </div>
