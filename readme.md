@@ -6,7 +6,7 @@
 MovieMatch! is a web app that I decided to create after having a hard time with my significant other
 when trying to figure out what to watch on any given night.
 
----
+## ![alt text](/ghImages/moviematch.png 'Logo Title Text 1')
 
 ## HOW TO RUN THE APP
 
