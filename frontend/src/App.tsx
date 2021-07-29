@@ -137,7 +137,7 @@ function App() {
           </div>
           <div className="user-bar w-3/5 self-center text-right lg:text-2xl lg-laptop:text-3xl 4k:text-6xl">
             <h1>
-              <a href="/my-stuff">My Stuff</a>
+              <a href="/#/my-stuff">My Stuff</a>
             </h1>
           </div>
         </header>
@@ -184,7 +184,7 @@ function App() {
         </div>
         <div className="user-bar w-3/5 self-center text-right lg:text-2xl lg-laptop:text-3xl 4k:text-6xl">
           <h1>
-            <a href="/my-stuff">My Stuff</a>
+            <a href="/#/my-stuff">My Stuff</a>
           </h1>
         </div>
       </header>
