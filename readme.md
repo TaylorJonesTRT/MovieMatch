@@ -6,7 +6,11 @@
 MovieMatch! is a web app that I decided to create after having a hard time with my significant other
 when trying to figure out what to watch on any given night.
 
-## ![alt text](/ghImages/moviematch.png 'Logo Title Text 1')
+## ![alt text](/ghImages/moviematch.png 'Homepage Screen')
+
+[LIVE DEMO](https://movie-match-mern.herokuapp.com/#/)
+
+---
 
 ## HOW TO RUN THE APP
 
@@ -29,6 +33,8 @@ Run the following command `npm start` in both the backend and frontend folders a
 ---
 
 ## WHAT WAS USED
+
+All movies and their information are provided by TMDB and their free to use API!
 
 This project utilizes Typescript both in the frontend (bootstrapped with create-react-app)
 and the backend (an express based RESTful api server).
