@@ -8,13 +8,15 @@ when trying to figure out what to watch on any given night.
 
 ## ![alt text](/ghImages/moviematch.png 'Homepage Screen')
 
+(NSFW WARNING, due to some foriegn films not labeling their movies as "Adult" a rare one may slip through)
+
 [LIVE DEMO](https://movie-match-mern.herokuapp.com/#/)
 
 ---
 
 ## HOW TO RUN THE APP
 
-(This app requires you to already have Mongo installed locally)
+(This app requires you to already have Mongo installed locally or a cloud instance running)
 
 First you will need to create a GitHub OAuth app in your GitHub developer settings.
 
