@@ -21,9 +21,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [reload, setReload] = useState(0);
 
-  // changing the browser title
-  document.title = 'MovieMatch';
-
   // This hook is being used to grab the movie data from the backend api and to set that data into
   // its correct state instance. Also changing state of loading to display the movie data rather
   // than the information that is loaded when loading is set to true.
@@ -43,6 +40,7 @@ function App() {
     };
 
     fetchMovieDetails().then(() => setLoading(false));
+    document.title = 'MovieMatch';
   }, [reload]);
 
   // This useEffect looks to make sure that there is a cookie named 'token' at all times. If there is
